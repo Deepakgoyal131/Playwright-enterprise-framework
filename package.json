@@ -1,0 +1,35 @@
+{
+  "name": "playwright-enterprise-framework",
+  "version": "1.0.0",
+  "description": "Most advance automation framework which is easy to use, scalable, maintainable, and feet for all type of web application like Role based applications, Simple application, Flow dependent applications",
+  "main": "index.js",
+  "scripts": {
+    "test:qa": "cross-env FRAMEWORK_ENV=qa playwright test",
+    "test:dev": "cross-env FRAMEWORK_ENV=dev playwright test",
+    "test:uat": "cross-env FRAMEWORK_ENV=uat playwright test",
+    "test:prod": "cross-env FRAMEWORK_ENV=prod playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^10.8.0",
+    "exceljs": "^4.4.0",
+    "faker": "^6.6.6",
+    "fs-extra": "^11.4.0",
+    "prettier": "^3.9.6",
+    "ts-node": "^10.9.2",
+    "winston": "^3.19.0",
+    "xlsx": "^0.18.5"
+  }
+}

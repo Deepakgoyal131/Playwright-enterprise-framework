@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+
+    "strict": true,
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    "resolveJsonModule": true,
+
+    "types": [
+      "node",
+      "@playwright/test"
+    ],
+
+    "baseUrl": ".",
+
+    "paths": {
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@utils/*": ["src/utils/*"],
+      "@fixtures/*": ["src/fixtures/*"],
+      "@common/*": ["src/common/*"],
+      "@api/*": ["src/api/*"],
+      "@constants/*": ["src/constants/*"],
+      "@models/*": ["src/models/*"],
+      "@testdata/*": ["src/testdata/*"]
+    },
+
+    "skipLibCheck": true,
+
+    "forceConsistentCasingInFileNames": true
+  },
+
+  "include": [
+    "src",
+    "tests",
+    "playwright.config.ts"
+, "configs/Environment.ts"  ],
+
+  "exclude": [
+    "node_modules",
+    "allure-report",
+    "allure-results"
+  ]
+}
