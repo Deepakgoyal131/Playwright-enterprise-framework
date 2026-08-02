@@ -3,6 +3,8 @@ import { FrameworkConfig } from "configs/FrameworkConfig";
 import { Logger } from "../logger";
 import { WaitHelper } from "./WaitHelper";
 import { ErrorHandler, ErrorType } from "../errors";
+import { Environment } from "configs/Environment";
+import { RetryHelper } from "./RetryHelper";
 
 export class FillHelper {
 
@@ -16,17 +18,29 @@ export class FillHelper {
 
         try {
 
-            await WaitHelper.waitForVisible(locator, timeout);
+            await RetryHelper.execute({
 
-            await WaitHelper.waitForEnabled(locator, timeout);
+                actionName: "FillHelper.fill",
 
-            await locator.scrollIntoViewIfNeeded();
+                retries: Environment.retryCount,
 
-            await locator.clear();
+                action: async () => {
 
-            await locator.fill(value, { timeout });
+                    await WaitHelper.waitForVisible(locator, timeout);
 
-            await expect(locator).toHaveValue(value);
+                    await WaitHelper.waitForEnabled(locator, timeout);
+
+                    await locator.scrollIntoViewIfNeeded();
+
+                    await locator.clear();
+
+                    await locator.fill(value, { timeout });
+
+                    await expect(locator).toHaveValue(value);
+
+                }
+
+            });
 
             Logger.info("Value entered successfully.");
 
