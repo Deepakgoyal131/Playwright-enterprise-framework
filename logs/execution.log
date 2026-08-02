@@ -1,0 +1,35 @@
+2026-08-02T09:22:34.540Z | INFO  | Framework started
+2026-08-02T09:22:34.542Z | WARN  | Retrying click
+2026-08-02T09:22:34.543Z | ERROR | Login failed
+2026-08-02T09:22:34.544Z | DEBUG | Locator resolved
+2026-08-02T10:36:14.852Z | DEBUG | Starting click action.
+2026-08-02T10:36:14.853Z | DEBUG | Waiting for element to become visible.
+2026-08-02T10:36:16.066Z | INFO  | Element became visible.
+2026-08-02T10:36:16.067Z | DEBUG | Waiting for element to become enabled.
+2026-08-02T10:36:16.129Z | INFO  | Element is enabled.
+2026-08-02T10:36:16.986Z | INFO  | Click action completed successfully.
+2026-08-02T10:36:16.987Z | DEBUG | Waiting for text: Your username is invalid!
+2026-08-02T10:36:17.019Z | INFO  | Expected text appeared.
+2026-08-02T11:57:33.849Z | DEBUG | Filling value: "student"
+2026-08-02T11:57:33.864Z | DEBUG | [FillHelper.fill] Attempt 1/1
+2026-08-02T11:57:33.866Z | DEBUG | Waiting for element to become visible.
+2026-08-02T11:57:34.057Z | INFO  | Element became visible.
+2026-08-02T11:57:34.058Z | DEBUG | Waiting for element to become enabled.
+2026-08-02T11:57:34.080Z | INFO  | Element is enabled.
+2026-08-02T11:57:34.248Z | INFO  | Value entered successfully.
+2026-08-02T11:57:34.249Z | DEBUG | Filling value: "Password123"
+2026-08-02T11:57:34.251Z | DEBUG | [FillHelper.fill] Attempt 1/1
+2026-08-02T11:57:34.252Z | DEBUG | Waiting for element to become visible.
+2026-08-02T11:57:34.261Z | INFO  | Element became visible.
+2026-08-02T11:57:34.262Z | DEBUG | Waiting for element to become enabled.
+2026-08-02T11:57:34.275Z | INFO  | Element is enabled.
+2026-08-02T11:57:34.501Z | INFO  | Value entered successfully.
+2026-08-02T11:57:34.502Z | DEBUG | Starting click action.
+2026-08-02T11:57:34.504Z | DEBUG | [ClickHelper.click] Attempt 1/1
+2026-08-02T11:57:34.505Z | DEBUG | Waiting for element to become visible.
+2026-08-02T11:57:34.533Z | INFO  | Element became visible.
+2026-08-02T11:57:34.534Z | DEBUG | Waiting for element to become enabled.
+2026-08-02T11:57:34.545Z | INFO  | Element is enabled.
+2026-08-02T11:57:37.844Z | INFO  | Click action completed successfully.
+2026-08-02T11:57:37.845Z | DEBUG | Waiting for text: Logged In Successfully
+2026-08-02T11:57:38.104Z | INFO  | Expected text appeared.

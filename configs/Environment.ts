@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import * as path from "path";
-
+import { FrameworkConfig } from "./FrameworkConfig";
 /**
  * Centralized Environment Configuration Manager.
  *
@@ -95,4 +95,10 @@ export class Environment {
   public static get isCI(): boolean {
     return this._isCI;
   }
+
+  public static get retryCount(): number {
+    return this.isCI
+        ? FrameworkConfig.retry.ci
+        : FrameworkConfig.retry.local;
+}
 }
