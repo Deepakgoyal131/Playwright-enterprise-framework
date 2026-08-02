@@ -2,3 +2,11 @@
 2026-08-02T09:22:34.542Z | WARN  | Retrying click
 2026-08-02T09:22:34.543Z | ERROR | Login failed
 2026-08-02T09:22:34.544Z | DEBUG | Locator resolved
+2026-08-02T10:36:14.852Z | DEBUG | Starting click action.
+2026-08-02T10:36:14.853Z | DEBUG | Waiting for element to become visible.
+2026-08-02T10:36:16.066Z | INFO  | Element became visible.
+2026-08-02T10:36:16.067Z | DEBUG | Waiting for element to become enabled.
+2026-08-02T10:36:16.129Z | INFO  | Element is enabled.
+2026-08-02T10:36:16.986Z | INFO  | Click action completed successfully.
+2026-08-02T10:36:16.987Z | DEBUG | Waiting for text: Your username is invalid!
+2026-08-02T10:36:17.019Z | INFO  | Expected text appeared.

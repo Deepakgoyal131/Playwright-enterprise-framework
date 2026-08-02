@@ -140,7 +140,7 @@ export class WaitHelper {
             ErrorHandler.handle(
                 ErrorType.WAIT,
                 "WaitHelper.waitForText",
-                `Locator not contain Text: ${text}`,
+                `Locator does not contain Text: ${text}`,
                 error
             );
         }

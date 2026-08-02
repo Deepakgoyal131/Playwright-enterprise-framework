@@ -1,9 +1,9 @@
 import {test, expect} from '@playwright/test'
-import { Logger } from "@core/logger";
+import { ClickHelper } from "@core/helpers/ClickHelper";
+import { WaitHelper } from '@core/helpers/WaitHelper';
 
-test("check logger", async () => {
-    Logger.info("Framework started");
-Logger.warn("Retrying click");
-Logger.error("Login failed");
-Logger.debug("Locator resolved");
+test("check Click Helper", async ({page}) => {
+    await page.goto("/practice-test-login/");
+    await ClickHelper.click(page.locator('#submit'));
+    await WaitHelper.waitForText(page.locator("#error"), "Your username is invalid!");
 })
