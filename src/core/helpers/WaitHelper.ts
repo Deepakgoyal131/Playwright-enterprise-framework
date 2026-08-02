@@ -1,5 +1,6 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { Logger } from "../logger";
+import { ErrorHandler, ErrorType } from "@core/errors";
 import { FrameworkConfig } from "configs/FrameworkConfig";
 export class WaitHelper {
     private static readonly DEFAULT_TIMEOUT = FrameworkConfig.timeout.expect;
@@ -11,11 +12,18 @@ export class WaitHelper {
 
         Logger.debug("Waiting for element to become visible.");
 
-        await expect(locator).toBeVisible({
-            timeout
-        });
+        try {
+            await expect(locator).toBeVisible({ timeout });
 
-        Logger.debug("Element is visible.");
+            Logger.info("Element became visible.");
+        } catch (error) {
+            ErrorHandler.handle(
+                ErrorType.WAIT,
+                "WaitHelper.waitForVisible",
+                "Element did not become visible.",
+                error
+            );
+        }
     }
 
     public static async waitForHidden(
@@ -25,11 +33,22 @@ export class WaitHelper {
 
         Logger.debug("Waiting for element to become hidden.");
 
-        await expect(locator).toBeHidden({
-            timeout
-        });
+        try {
+            await expect(locator).toBeHidden({
+                timeout
+            });
 
-        Logger.debug("Element is hidden.");
+            Logger.info("Element is hidden.");
+        }
+        catch (error) {
+            ErrorHandler.handle(
+                ErrorType.WAIT,
+                "WaitHelper.waitForHidden",
+                "Element did not hidden",
+                error
+            );
+        }
+
     }
 
     public static async waitForEnabled(
@@ -39,11 +58,21 @@ export class WaitHelper {
 
         Logger.debug("Waiting for element to become enabled.");
 
-        await expect(locator).toBeEnabled({
-            timeout
-        });
+        try {
+            await expect(locator).toBeEnabled({
+                timeout
+            });
 
-        Logger.debug("Element is enabled.");
+            Logger.info("Element is enabled.");
+        } catch (error) {
+            ErrorHandler.handle(
+                ErrorType.WAIT,
+                "WaitHelper.waitForEnabled",
+                "Element did not become enabled",
+                error
+            );
+        }
+
     }
 
     public static async waitForURL(
@@ -54,11 +83,21 @@ export class WaitHelper {
 
         Logger.debug(`Waiting for URL: ${url}`);
 
-        await page.waitForURL(url, {
-            timeout
-        });
+        try {
+            await page.waitForURL(url, {
+                timeout
+            });
 
-        Logger.debug("Navigation completed.");
+            Logger.info("Navigation completed.");
+        } catch (error) {
+            ErrorHandler.handle(
+                ErrorType.WAIT,
+                "WaitHelper.waitForURL",
+                `URL: ${url} Not appear`,
+                error
+            );
+        }
+
     }
 
     public static async waitForLoad(
@@ -68,9 +107,19 @@ export class WaitHelper {
 
         Logger.debug(`Waiting for page load state: ${state}`);
 
-        await page.waitForLoadState(state);
+        try {
+            await page.waitForLoadState(state);
 
-        Logger.debug("Page fully loaded.");
+            Logger.info("Page fully loaded.");
+        } catch (error) {
+            ErrorHandler.handle(
+                ErrorType.WAIT,
+                "WaitHelper.waitForLoad",
+                "Page not Loaded",
+                error
+            );
+        }
+
     }
 
     public static async waitForText(
@@ -81,11 +130,21 @@ export class WaitHelper {
 
         Logger.debug(`Waiting for text: ${text}`);
 
-        await expect(locator).toContainText(text, {
-            timeout
-        });
+        try {
+            await expect(locator).toContainText(text, {
+                timeout
+            });
 
-        Logger.debug("Expected text appeared.");
+            Logger.info("Expected text appeared.");
+        } catch (error) {
+            ErrorHandler.handle(
+                ErrorType.WAIT,
+                "WaitHelper.waitForText",
+                `Locator not contain Text: ${text}`,
+                error
+            );
+        }
+
     }
 
 }

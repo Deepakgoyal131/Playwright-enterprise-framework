@@ -1,0 +1,11 @@
+export enum ErrorType {
+  WAIT = "WAIT",
+  CLICK = "CLICK",
+  FILL = "FILL",
+  NAVIGATION = "NAVIGATION",
+  ASSERTION = "ASSERTION",
+  API = "API",
+  DATABASE = "DATABASE",
+  FRAMEWORK = "FRAMEWORK",
+  UNKNOWN = "UNKNOWN",
+}
