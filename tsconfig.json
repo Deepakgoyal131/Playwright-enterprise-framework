@@ -29,7 +29,8 @@
       "@api/*": ["src/api/*"],
       "@constants/*": ["src/constants/*"],
       "@models/*": ["src/models/*"],
-      "@testdata/*": ["src/testdata/*"]
+      "@testdata/*": ["src/testdata/*"],
+      "@core/*": ["src/core/*"]
     },
 
     "skipLibCheck": true,
