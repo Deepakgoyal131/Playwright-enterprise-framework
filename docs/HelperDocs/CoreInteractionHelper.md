@@ -1,3 +1,25 @@
+**Standard Helper Work Flow**
+Public Method
+      │
+      ▼
+Logger.debug(Start)
+      │
+      ▼
+RetryHelper.execute()
+      │
+      ▼
+WaitHelper (if required)
+      │
+      ▼
+Playwright Action
+      │
+      ▼
+Logger.info(Success)
+      │
+      ▼
+ErrorHandler(Failure)
+
+
 **Core Interaction Helpers**
 KeyboardHelper
 MouseHelper
@@ -24,3 +46,15 @@ await KeyboardHelper.press(page, "Escape");
 await KeyboardHelper.pressCombination(page, ["Control", "A"]);
 await KeyboardHelper.type(page, "Deepak");
 await KeyboardHelper.typeSlowly(page, "Deepak", 50);
+
+**Why?**
+
+Instead of:
+
+await KeyboardHelper.press(page, "ArrowDown");
+
+we write:
+
+await KeyboardHelper.press(page, KeyboardKeys.ARROW_DOWN);
+
+The compiler now helps us catch typos.
