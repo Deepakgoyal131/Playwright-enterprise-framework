@@ -1,8 +1,8 @@
 import { Locator, expect } from "@playwright/test";
 import { FrameworkConfig } from "configs/FrameworkConfig";
-import { Logger } from "../logger";
+import { Logger } from "../../logger";
 import { WaitHelper } from "./WaitHelper";
-import { ErrorHandler, ErrorType } from "../errors";
+import { ErrorHandler, ErrorType } from "../../errors";
 import { Environment } from "configs/Environment";
 import { RetryHelper } from "./RetryHelper";
 

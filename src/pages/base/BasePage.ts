@@ -1,5 +1,5 @@
 import { Page, Locator } from "@playwright/test";
-import { FillHelper, ClickHelper } from "@core/helpers";
+import { FillHelper, ClickHelper } from "@core/helpers/interaction";
 
 export abstract class BasePage {
 

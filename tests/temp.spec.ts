@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test'
-import { ClickHelper, WaitHelper, FillHelper } from '@core/helpers';
+import { ClickHelper, WaitHelper, FillHelper } from '@core/helpers/interaction';
 
 test("check Click Helper", async ({page}) => {
     await page.goto("/practice-test-login/");

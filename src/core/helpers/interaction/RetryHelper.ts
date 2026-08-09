@@ -1,4 +1,4 @@
-import { Logger } from "../logger";
+import { Logger } from "../../logger";
 import { RetryOptions } from "@core/types/RetryOptions";
 
 export class RetryHelper {
