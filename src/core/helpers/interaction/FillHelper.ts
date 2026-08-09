@@ -4,7 +4,7 @@ import { Logger } from "../../logger";
 import { WaitHelper } from "./WaitHelper";
 import { ErrorHandler, ErrorType } from "../../errors";
 import { ActionExecutor } from "@core/executor/ActionExecutor";
-import { ActionNames } from "@core/constants";
+import { ActionNames } from "@core/enum";
 
 export class FillHelper {
 

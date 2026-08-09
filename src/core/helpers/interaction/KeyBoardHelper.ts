@@ -4,7 +4,7 @@ import { ErrorHandler, ErrorType } from "../../errors";
 import { RetryHelper } from "./RetryHelper";
 import { Environment } from "configs/Environment";
 import { ActionExecutor } from "@core/executor/ActionExecutor";
-import { ActionNames } from "@core/constants";
+import { ActionNames } from "@core/enum";
 
 export class KeyboardHelper {
 

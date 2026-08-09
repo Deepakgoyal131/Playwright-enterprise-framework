@@ -1,5 +1,5 @@
 import { ErrorType } from "../errors";
-import { ActionNames } from "@core/constants/ActionsName";
+import { ActionNames } from "@core/enum/ActionsName";
 
 export interface ActionOptions<T = void> {
 

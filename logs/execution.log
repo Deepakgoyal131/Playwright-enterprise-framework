@@ -33,3 +33,29 @@
 2026-08-02T11:57:37.844Z | INFO  | Click action completed successfully.
 2026-08-02T11:57:37.845Z | DEBUG | Waiting for text: Logged In Successfully
 2026-08-02T11:57:38.104Z | INFO  | Expected text appeared.
+2026-08-09T10:44:04.311Z | DEBUG | Starting FillHelper.fill
+2026-08-09T10:44:04.374Z | DEBUG | [FillHelper.fill] Attempt 1/1
+2026-08-09T10:44:04.375Z | DEBUG | Waiting for element to become visible.
+2026-08-09T10:44:04.787Z | INFO  | Element became visible.
+2026-08-09T10:44:04.788Z | DEBUG | Waiting for element to become enabled.
+2026-08-09T10:44:04.801Z | INFO  | Element is enabled.
+2026-08-09T10:44:05.004Z | INFO  | Value entered successfully.
+2026-08-09T10:44:05.021Z | DEBUG | Duration: 630.74 ms | Retries: 0
+2026-08-09T10:44:05.022Z | DEBUG | Starting FillHelper.fill
+2026-08-09T10:44:05.024Z | DEBUG | [FillHelper.fill] Attempt 1/1
+2026-08-09T10:44:05.025Z | DEBUG | Waiting for element to become visible.
+2026-08-09T10:44:05.037Z | INFO  | Element became visible.
+2026-08-09T10:44:05.038Z | DEBUG | Waiting for element to become enabled.
+2026-08-09T10:44:05.050Z | INFO  | Element is enabled.
+2026-08-09T10:44:05.251Z | INFO  | Value entered successfully.
+2026-08-09T10:44:05.252Z | DEBUG | Duration: 227.25 ms | Retries: 0
+2026-08-09T10:44:05.253Z | DEBUG | Starting ClickHelper.click
+2026-08-09T10:44:05.254Z | DEBUG | [ClickHelper.click] Attempt 1/1
+2026-08-09T10:44:05.255Z | DEBUG | Waiting for element to become visible.
+2026-08-09T10:44:05.287Z | INFO  | Element became visible.
+2026-08-09T10:44:05.288Z | DEBUG | Waiting for element to become enabled.
+2026-08-09T10:44:05.319Z | INFO  | Element is enabled.
+2026-08-09T10:44:09.834Z | INFO  | Element clicked successfully.
+2026-08-09T10:44:09.835Z | DEBUG | Duration: 4580.24 ms | Retries: 0
+2026-08-09T10:44:09.837Z | DEBUG | Waiting for text: Logged In Successfully
+2026-08-09T10:44:10.039Z | INFO  | Expected text appeared.

@@ -1,11 +1,14 @@
-import { Logger } from "../../logger";
+// 
+
+import { Logger } from "@core/logger";
 import { RetryOptions } from "@core/types/RetryOptions";
+import { RetryResult } from "@core/models/RetryResult";
 
 export class RetryHelper {
 
     public static async execute<T>(
         options: RetryOptions<T>
-    ): Promise<T> {
+    ): Promise<RetryResult<T>> {
 
         let lastError: unknown;
 
@@ -25,7 +28,10 @@ export class RetryHelper {
                     );
                 }
 
-                return result;
+                return {
+                    result,
+                    attempts: attempt
+                };
 
             } catch (error) {
 
@@ -44,7 +50,6 @@ export class RetryHelper {
         }
 
         throw lastError;
-
     }
 
 }

@@ -3,7 +3,7 @@ import { WaitHelper } from "./WaitHelper";
 import { ErrorType } from "../../errors";
 import { FrameworkConfig } from "configs/FrameworkConfig";
 import { ActionExecutor } from "@core/executor/ActionExecutor";
-import { ActionNames } from "@core/constants";
+import { ActionNames } from "@core/enum";
 
 export class ClickHelper {
 
