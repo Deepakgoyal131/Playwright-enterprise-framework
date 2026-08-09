@@ -17,5 +17,14 @@ export enum ActionNames {
     ASSERT_UNCHECKED = "AssertHelper.unChecked",
     ASSERT_URL = "AssertHelper.url",
     ASSERT_TITLE = "AssertHelper.title",
-    
+
+    MOUSE_HOVER = "MouseHelper.hover",
+    MOUSE_DOUBLE_CLICK = "MouseHelper.doubleClick",
+    MOUSE_RIGHT_CLICK = "MouseHelper.rightClick",
+    MOUSE_DRAG_AND_DROP = "MouseHelper.dragAndDrop",
+    MOUSE_MOVE = "MouseHelper.move",
+    MOUSE_DOWN = "MouseHelper.mouseDown",
+    MOUSE_UP = "MouseHelper.mouseUp",
+    MOUSE_WHEEL = "MouseHelper.mouseWheel",
+
 }
