@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { Logger } from "../logger";
+import { Logger } from "../../logger";
 import { ErrorHandler, ErrorType } from "@core/errors";
 import { FrameworkConfig } from "configs/FrameworkConfig";
 export class WaitHelper {

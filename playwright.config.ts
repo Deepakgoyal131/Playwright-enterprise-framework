@@ -31,9 +31,9 @@ export default defineConfig({
     actionTimeout: FrameworkConfig.timeout.action,
     navigationTimeout: FrameworkConfig.timeout.navigation,
 
-    screenshot: FrameworkConfig.artifact.screenshot,
-    video: FrameworkConfig.artifact.video,
-    trace: FrameworkConfig.artifact.trace,
+    screenshot: FrameworkConfig.artifacts.screenshot,
+    video: FrameworkConfig.artifacts.video,
+    trace: FrameworkConfig.artifacts.trace,
 
   },
 

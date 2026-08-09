@@ -1,10 +1,10 @@
 import { Locator, expect } from "@playwright/test";
 import { FrameworkConfig } from "configs/FrameworkConfig";
-import { Logger } from "../logger";
+import { Logger } from "../../logger";
 import { WaitHelper } from "./WaitHelper";
-import { ErrorHandler, ErrorType } from "../errors";
-import { Environment } from "configs/Environment";
-import { RetryHelper } from "./RetryHelper";
+import { ErrorHandler, ErrorType } from "../../errors";
+import { ActionExecutor } from "@core/executor/ActionExecutor";
+import { ActionNames } from "@core/enum";
 
 export class FillHelper {
 
@@ -14,15 +14,15 @@ export class FillHelper {
         timeout = FrameworkConfig.timeout.action
     ): Promise<void> {
 
-        Logger.debug(`Filling value: "${value}"`);
+            await ActionExecutor.execute({
 
-        try {
+                actionName: ActionNames.FILL,
 
-            await RetryHelper.execute({
+                errorType: ErrorType.FILL,
 
-                actionName: "FillHelper.fill",
+                successMessage: "Value entered successfully.",
 
-                retries: Environment.retryCount,
+                failureMessage: "Unable to enter value.",
 
                 action: async () => {
 
@@ -41,19 +41,6 @@ export class FillHelper {
                 }
 
             });
-
-            Logger.info("Value entered successfully.");
-
-        } catch (error) {
-
-            ErrorHandler.handle(
-                ErrorType.FILL,
-                "FillHelper.fill",
-                `Failed to enter value "${value}".`,
-                error
-            );
-
-        }
 
     }
 
