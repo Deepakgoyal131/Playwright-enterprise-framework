@@ -59,3 +59,33 @@
 2026-08-09T10:44:09.835Z | DEBUG | Duration: 4580.24 ms | Retries: 0
 2026-08-09T10:44:09.837Z | DEBUG | Waiting for text: Logged In Successfully
 2026-08-09T10:44:10.039Z | INFO  | Expected text appeared.
+2026-08-09T11:31:28.420Z | DEBUG | Starting FillHelper.fill
+2026-08-09T11:31:28.461Z | DEBUG | [FillHelper.fill] Attempt 1/1
+2026-08-09T11:31:28.462Z | DEBUG | Waiting for element to become visible.
+2026-08-09T11:31:29.052Z | INFO  | Element became visible.
+2026-08-09T11:31:29.053Z | DEBUG | Waiting for element to become enabled.
+2026-08-09T11:31:29.067Z | INFO  | Element is enabled.
+2026-08-09T11:31:29.793Z | INFO  | Value entered successfully.
+2026-08-09T11:31:29.823Z | DEBUG | Duration: 1332.47 ms | Retries: 0
+2026-08-09T11:31:30.947Z | INFO  | Screenshot saved : reports\screenshots\Login Page_2026-08-09T11-31-29-826Z.png
+2026-08-09T11:31:30.949Z | DEBUG | Starting FillHelper.fill
+2026-08-09T11:31:30.950Z | DEBUG | [FillHelper.fill] Attempt 1/1
+2026-08-09T11:31:30.950Z | DEBUG | Waiting for element to become visible.
+2026-08-09T11:31:30.962Z | INFO  | Element became visible.
+2026-08-09T11:31:30.963Z | DEBUG | Waiting for element to become enabled.
+2026-08-09T11:31:30.972Z | INFO  | Element is enabled.
+2026-08-09T11:31:31.094Z | INFO  | Value entered successfully.
+2026-08-09T11:31:31.097Z | DEBUG | Duration: 144.71 ms | Retries: 0
+2026-08-09T11:31:31.247Z | INFO  | Element screenshot saved : reports\screenshots\Screenshot_2026-08-09T11-31-31-100Z.png
+2026-08-09T11:31:31.250Z | DEBUG | Starting ClickHelper.click
+2026-08-09T11:31:31.251Z | DEBUG | [ClickHelper.click] Attempt 1/1
+2026-08-09T11:31:31.255Z | DEBUG | Waiting for element to become visible.
+2026-08-09T11:31:31.272Z | INFO  | Element became visible.
+2026-08-09T11:31:31.274Z | DEBUG | Waiting for element to become enabled.
+2026-08-09T11:31:31.288Z | INFO  | Element is enabled.
+2026-08-09T11:31:33.076Z | INFO  | Element clicked successfully.
+2026-08-09T11:31:33.077Z | DEBUG | Duration: 1824.66 ms | Retries: 0
+2026-08-09T11:31:33.078Z | DEBUG | Waiting for text: Logged In Successfully
+2026-08-09T11:31:33.133Z | INFO  | Expected text appeared.
+2026-08-09T11:31:33.134Z | DEBUG | Asserting text: "Logged In Successfully!"
+2026-08-09T11:31:43.478Z | ERROR | [ASSERTION] AssertionHelper.assertText : Expected text: "Logged In Successfully!"

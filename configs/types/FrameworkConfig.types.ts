@@ -43,12 +43,72 @@ export interface ExecutionConfig {
   forbidOnlyInCI: boolean;
 }
 
+export interface ScreenshotConfig {
+    enabled: boolean;
+    directory: string;
+    fullPage: boolean;
+    captureOnFailure: boolean;
+    captureOnSuccess: boolean;
+    timestamp: boolean;
+}
+
+export interface LoggingConfig {
+    enabled: boolean;
+    level: "debug" | "info" | "warn" | "error";
+    timestamp: boolean;
+    colors: boolean;
+}
+
+export interface PerformanceConfig {
+    enabled: boolean;
+    logExecutionTime: boolean;
+    slowActionThreshold: number;
+}
+
+export interface WaitConfig {
+    pollingInterval: number;
+    stableElementTimeout: number;
+}
+
+export interface FrameworkBehaviorConfig {
+    strictMode: boolean;
+    continueOnFailure: boolean;
+    captureConsoleLogs: boolean;
+}
+
+export interface AllureConfig {
+    enabled: boolean;
+    environmentInfo: boolean;
+    attachScreenshots: boolean;
+    attachVideos: boolean;
+}
+
 export interface FrameworkConfiguration {
-  browser: BrowserConfig;
-  timeout: TimeoutConfig;
-  retry: RetryConfig;
-  workers: WorkerConfig;
-  reporter: ReporterConfig;
-  artifact: ArtifactConfig;
-  execution: ExecutionConfig;
+
+    browser: BrowserConfig;
+
+    timeout: TimeoutConfig;
+
+    retry: RetryConfig;
+
+    workers: WorkerConfig;
+
+    reporter: ReporterConfig;
+
+    artifacts: ArtifactConfig;
+
+    screenshot: ScreenshotConfig;
+
+    logging: LoggingConfig;
+
+    performance: PerformanceConfig;
+
+    wait: WaitConfig;
+
+    framework: FrameworkBehaviorConfig;
+
+    allure: AllureConfig;
+
+    execution: ExecutionConfig;
+
 }
