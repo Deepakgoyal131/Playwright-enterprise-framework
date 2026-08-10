@@ -27,4 +27,10 @@ export enum ActionNames {
     MOUSE_UP = "MouseHelper.mouseUp",
     MOUSE_WHEEL = "MouseHelper.mouseWheel",
 
+    DROPDOWN_SELECT_TEXT = "DropdownHelper.selectByText",
+    DROPDOWN_SELECT_VALUE = "DropdownHelper.selectByValue",
+    DROPDOWN_SELECT_LABEL = "DropdownHelper.selectByLabel",
+    DROPDOWN_SEARCH = "DropdownHelper.selectSearchable",
+    DROPDOWN_MULTI = "DropdownHelper.selectMulti",
+
 }
