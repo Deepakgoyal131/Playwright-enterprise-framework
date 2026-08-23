@@ -15,17 +15,14 @@ export class TestDataManager {
     private static paymentReader:
         JsonReader<PaymentData>;
 
-    private constructor() {
-        // Prevent instantiation.
-    }
+    private constructor() {}
 
-    // --------------------------------------------------
-    // Login Data
-    // --------------------------------------------------
+    // -------------------------------
+    // Login
+    // -------------------------------
 
-    public static login(
-        key: string = "admin"
-    ): LoginData {
+    private static getLoginReader():
+        JsonReader<LoginData> {
 
         if (!this.loginReader) {
 
@@ -33,20 +30,34 @@ export class TestDataManager {
                 new JsonReader<LoginData>(
                     "login.json"
                 );
-
         }
 
-        return this.loginReader.get(key);
-
+        return this.loginReader;
     }
 
-    // --------------------------------------------------
-    // Customer Data
-    // --------------------------------------------------
+    public static login(
+        key: string = "admin"
+    ): LoginData {
 
-    public static customer(
-        key: string = "defaultCustomer"
-    ): CustomerData {
+        return this
+            .getLoginReader()
+            .get(key);
+    }
+
+    public static allLoginData():
+        LoginData[] {
+
+        return Object.values(
+            this.getLoginReader().read()
+        );
+    }
+
+    // -------------------------------
+    // Customer
+    // -------------------------------
+
+    private static getCustomerReader():
+        JsonReader<CustomerData> {
 
         if (!this.customerReader) {
 
@@ -54,20 +65,34 @@ export class TestDataManager {
                 new JsonReader<CustomerData>(
                     "customer.json"
                 );
-
         }
 
-        return this.customerReader.get(key);
-
+        return this.customerReader;
     }
 
-    // --------------------------------------------------
-    // Payment Data
-    // --------------------------------------------------
+    public static customer(
+        key: string = "defaultCustomer"
+    ): CustomerData {
 
-    public static payment(
-        key: string = "validPayment"
-    ): PaymentData {
+        return this
+            .getCustomerReader()
+            .get(key);
+    }
+
+    public static allCustomerData():
+        CustomerData[] {
+
+        return Object.values(
+            this.getCustomerReader().read()
+        );
+    }
+
+    // -------------------------------
+    // Payment
+    // -------------------------------
+
+    private static getPaymentReader():
+        JsonReader<PaymentData> {
 
         if (!this.paymentReader) {
 
@@ -75,11 +100,25 @@ export class TestDataManager {
                 new JsonReader<PaymentData>(
                     "payment.json"
                 );
-
         }
 
-        return this.paymentReader.get(key);
-
+        return this.paymentReader;
     }
 
+    public static payment(
+        key: string = "validPayment"
+    ): PaymentData {
+
+        return this
+            .getPaymentReader()
+            .get(key);
+    }
+
+    public static allPaymentData():
+        PaymentData[] {
+
+        return Object.values(
+            this.getPaymentReader().read()
+        );
+    }
 }

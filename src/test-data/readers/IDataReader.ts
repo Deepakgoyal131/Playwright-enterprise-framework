@@ -5,14 +5,4 @@ export interface IDataReader<T> {
      */
     read(): T[];
 
-    /**
-     * Get a specific record by key.
-     */
-    get(key: string): T;
-
-    /**
-     * Check whether a record exists.
-     */
-    exists(key: string): boolean;
-
 }

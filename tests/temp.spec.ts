@@ -3,7 +3,9 @@ import {test, expect} from '@playwright/test'
 // import { ClickHelper, WaitHelper, FillHelper } from '@core/helpers/interaction';
 // import { ScreenshotHelper } from '@core/helpers/diagnostics/ScreenshotHelper';
 // import { AssertionHelper } from '@core/helpers/assertions/AssertionHelper';
-import { FakerFactory, TestDataManager, TestDataFactory } from '@test-data';
+// import { FakerFactory, TestDataManager, TestDataFactory, DataDrivenHelper, ExcelReader } from '@test-data';
+import { ExcelReader, LoginData } from "@test-data";
+// import { LoginData } from '@test-data';
 
 // test("check Click Helper", async ({page}) => {
 //     await page.goto("/practice-test-login/");
@@ -18,7 +20,7 @@ import { FakerFactory, TestDataManager, TestDataFactory } from '@test-data';
 // })
 
 
-
+/*
 test("Admin Login Check Test Data via JsonReader", async ({ page }) => {
 
     const login =
@@ -66,3 +68,80 @@ test("Test Data Framework", async () => {
     );
 
 });
+*/
+
+/*
+const loginData =
+    TestDataManager.allLoginData();
+
+for (
+    let index = 0;
+    index < loginData.length;
+    index++
+) {
+
+    const data =
+        loginData[index];
+
+    test(
+        DataDrivenHelper.testName(
+            "Login Test",
+            data,
+            index,
+            item => item.username
+        ),
+
+        async ({ page }) => {
+
+            // Test implementation
+
+            console.log(
+                data.username
+            );
+
+        }
+    );
+}
+*/
+
+
+const reader =
+    new ExcelReader<LoginData>(
+        "login.xlsx",
+        "Sheet1"
+    );
+
+const data =
+    reader.read();
+
+for (
+    let index = 0;
+    index < data.length;
+    index++
+) {
+
+    const login =
+        data[index];
+
+    test(
+        `Login - ${login.username}`,
+        async ({ page }) => {
+
+            console.log(
+                `Executing login for ${login.username}`
+            );
+
+            console.log(
+                `Password: ${login.password}`
+            );
+
+            // Later:
+            // const loginPage = new LoginPage(page);
+            // await loginPage.login(
+            //     login.username,
+            //     login.password
+            // );
+
+        }
+    );
+}

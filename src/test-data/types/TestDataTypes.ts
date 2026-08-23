@@ -9,4 +9,7 @@ export interface TestDataOptions {
 
     key?: string;
 
+    fileName?: string;
+
+    sheetName?: string;
 }
