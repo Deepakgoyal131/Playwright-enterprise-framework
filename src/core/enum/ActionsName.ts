@@ -33,4 +33,37 @@ export enum ActionNames {
     DROPDOWN_SEARCH = "DropdownHelper.selectSearchable",
     DROPDOWN_MULTI = "DropdownHelper.selectMulti",
 
+    CHECKBOX_CHECK = "CheckboxHelper.check",
+    CHECKBOX_UNCHECK = "CheckboxHelper.uncheck",
+    CHECKBOX_SET_CHECKED = "CheckboxHelper.setChecked",
+    CHECKBOX_TOGGLE = "CheckboxHelper.toggle",
+    CHECKBOX_IS_CHECKED = "CheckboxHelper.isChecked",
+
+    RADIO_SELECT = "RadioHelper.select",
+    RADIO_IS_SELECTED = "RadioHelper.isSelected",
+
+    FILE_UPLOAD = "FileUploadHelper.upload",
+    FILE_UPLOAD_MULTIPLE = "FileUploadHelper.uploadMultiple",
+    FILE_UPLOAD_CLEAR = "FileUploadHelper.clear",
+
+    NAVIGATION_GOTO = "NavigationHelper.goto",
+    NAVIGATION_RELOAD = "NavigationHelper.reload",
+    NAVIGATION_BACK = "NavigationHelper.goBack",
+    NAVIGATION_FORWARD = "NavigationHelper.goForward",
+    NAVIGATION_WAIT_FOR_URL = "NavigationHelper.waitForUrl",
+    NAVIGATION_CURRENT_URL = "NavigationHelper.getCurrentUrl",
+
+    MODAL_VISIBLE = "ModalHelper.waitForVisible",
+    MODAL_HIDDEN = "ModalHelper.waitForHidden",
+    MODAL_CONFIRM = "ModalHelper.confirm",
+    MODAL_CANCEL = "ModalHelper.cancel",
+    MODAL_MESSAGE = "ModalHelper.getMessage",
+    MODAL_IS_VISIBLE = "ModalHelper.isVisible",
+
+    TABLE_ROWS = "TableHelper.rows",
+    TABLE_ROW_COUNT = "TableHelper.rowCount",
+    TABLE_FIND_ROW = "TableHelper.findRow",
+    TABLE_CLICK_ROW_ACTION = "TableHelper.clickRowAction",
+    TABLE_GET_CELL_TEXT = "TableHelper.getCellText",
+    TABLE_GET_ALL_ROWS = "TableHelper.getAllRows",
 }
