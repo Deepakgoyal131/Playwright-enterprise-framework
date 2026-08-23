@@ -30,7 +30,9 @@
       "@constants/*": ["src/constants/*"],
       "@models/*": ["src/models/*"],
       "@testdata/*": ["src/testdata/*"],
-      "@core/*": ["src/core/*"]
+      "@core/*": ["src/core/*"],
+      "@test-data": ["src/test-data/index.ts"],
+      "@test-data/*": ["src/test-data/*"]
     },
 
     "skipLibCheck": true,
