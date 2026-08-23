@@ -1,0 +1,10 @@
+{
+    "validPayment": {
+        "cardHolderName": "Test User",
+        "cardNumber": "4111111111111111",
+        "expiryMonth": "12",
+        "expiryYear": "2030",
+        "cvv": "123",
+        "amount": 1000
+    }
+}
