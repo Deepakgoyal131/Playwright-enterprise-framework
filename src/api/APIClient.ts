@@ -12,31 +12,31 @@ export class APIClient {
   public constructor(private readonly requestContext: APIRequestContext) {}
 
   public get(url: string, options?: APIGetOptions): Promise<APIResponse> {
-    return RequestHelper.execute("GET", () =>
+    return RequestHelper.execute("GET", { url, options }, () =>
       this.requestContext.get(url, options),
     );
   }
 
   public post(url: string, options?: APIPostOptions): Promise<APIResponse> {
-    return RequestHelper.execute("POST", () =>
+    return RequestHelper.execute("POST", { url, options }, () =>
       this.requestContext.post(url, options),
     );
   }
 
   public put(url: string, options?: APIPutOptions): Promise<APIResponse> {
-    return RequestHelper.execute("PUT", () =>
+    return RequestHelper.execute("PUT", { url, options }, () =>
       this.requestContext.put(url, options),
     );
   }
 
   public patch(url: string, options?: APIPatchOptions): Promise<APIResponse> {
-    return RequestHelper.execute("PATCH", () =>
+    return RequestHelper.execute("PATCH", { url, options }, () =>
       this.requestContext.patch(url, options),
     );
   }
 
   public delete(url: string, options?: APIDeleteOptions): Promise<APIResponse> {
-    return RequestHelper.execute("DELETE", () =>
+    return RequestHelper.execute("DELETE", { url, options }, () =>
       this.requestContext.delete(url, options),
     );
   }

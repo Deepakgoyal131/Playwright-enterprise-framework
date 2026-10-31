@@ -7,7 +7,7 @@ Our ScreenshotHelper should support:
 4. Full Page Screenshot
 5. Timestamp Naming
 6. Module-wise Storage
-7. Future Allure Attachment
+7. Failure attachment to the Allure report when enabled
 
 **Public API**
 await ScreenshotHelper.capture(page);

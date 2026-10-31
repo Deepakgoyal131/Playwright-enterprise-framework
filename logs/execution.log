@@ -97,3 +97,8 @@
 2026-10-31T23:00:24.729Z | INFO  | API POST request completed with status 400.
 2026-10-31T23:00:24.730Z | DEBUG | Asserting API response status is 400.
 2026-10-31T23:00:24.733Z | DEBUG | Asserting API response JSON contains the expected properties.
+2026-10-31T23:11:04.025Z | DEBUG | Sending API POST request.
+2026-10-31T23:11:06.386Z | INFO  | API POST request completed with status 200.
+2026-10-31T23:11:06.388Z | DEBUG | Asserting API response status is 200.
+2026-10-31T23:11:06.643Z | DEBUG | Asserting API response includes header content-type.
+2026-10-31T23:11:06.751Z | DEBUG | Sending API POST request.
