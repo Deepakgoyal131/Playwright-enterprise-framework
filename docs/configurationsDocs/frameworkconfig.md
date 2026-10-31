@@ -1,5 +1,5 @@
 Architecture
-                Framework
+Framework
 
                    │
 
@@ -7,29 +7,32 @@ Architecture
 
       ▼                          ▼
 
-Environment.ts             FrameworkConfig.ts
+Environment.ts FrameworkConfig.ts
 
       │                          │
 
-Reads .env                 Stores Framework Rules
+Reads .env Stores Framework Rules
 
-------------------------------------------------
+---
+
 Responsibility of FrameworkConfig.ts
 
 Framework Configuration
-        │
-        ▼
+│
+▼
 FrameworkConfig.ts
-        │
-        ▼
+│
+▼
 Timeouts
 Retries
 Workers
 Reporters
 Artifacts
 Browser
+Allure report output and attachments
 
 **Browser**
+
 | Property     | Value        | Reason                                      |
 | ------------ | ------------ | ------------------------------------------- |
 | Browser      | Chromium     | Fastest and most stable                     |
@@ -39,6 +42,7 @@ Browser
 | Timezone     | Asia/Kolkata | Matches your application users              |
 
 **Timeout**
+
 | Timeout    | Value  | Reason                |
 | ---------- | ------ | --------------------- |
 | Test       | 2 min  | Entire test execution |
@@ -47,12 +51,14 @@ Browser
 | Expect     | 10 sec | Assertions            |
 
 **Retries**
+
 | Environment | Value |
 | ----------- | ----- |
 | Local       | 0     |
 | CI          | 2     |
 
 **Artifacts**
+
 | Feature    | Value             |
 | ---------- | ----------------- |
 | Screenshot | only-on-failure   |

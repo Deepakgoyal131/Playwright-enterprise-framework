@@ -8,146 +8,132 @@ import { FrameworkConfiguration } from "./types/FrameworkConfig.types";
  * NOT environment-specific values.
  */
 export const FrameworkConfig: Readonly<FrameworkConfiguration> = {
+  browser: {
+    browserName: "chromium",
 
-    browser: {
-
-        browserName: "chromium",
-
-        viewport: {
-            width: 1920,
-            height: 1080,
-        },
-
-        ignoreHTTPSErrors: true,
-
-        locale: "en-IN",
-
-        timezoneId: "Asia/Kolkata",
-
+    viewport: {
+      width: 1920,
+      height: 1080,
     },
 
-    timeout: {
+    ignoreHTTPSErrors: true,
 
-        test: 120000,
+    locale: "en-IN",
 
-        action: 15000,
+    timezoneId: "Asia/Kolkata",
+  },
 
-        navigation: 30000,
+  timeout: {
+    test: 120000,
 
-        expect: 10000,
+    action: 15000,
 
-    },
+    navigation: 30000,
 
-    retry: {
+    expect: 10000,
+  },
 
-        local: 0,
+  retry: {
+    local: 0,
 
-        ci: 2,
+    ci: 2,
+  },
 
-    },
+  workers: {
+    local: "50%",
 
-    workers: {
+    ci: "100%",
+  },
 
-        local: "50%",
+  reporter: {
+    html: true,
 
-        ci: "100%",
+    list: true,
 
-    },
+    allure: true,
+  },
 
-    reporter: {
+  artifacts: {
+    screenshot: "only-on-failure",
 
-        html: true,
+    video: "retain-on-failure",
 
-        list: true,
+    trace: "on-first-retry",
+  },
 
-        allure: false,
+  screenshot: {
+    enabled: true,
 
-    },
+    directory: "reports/screenshots",
 
-    artifacts: {
+    fullPage: true,
 
-        screenshot: "only-on-failure",
+    captureOnFailure: true,
 
-        video: "retain-on-failure",
+    captureOnSuccess: false,
 
-        trace: "on-first-retry",
+    timestamp: true,
+  },
 
-    },
+  logging: {
+    enabled: true,
 
-    screenshot: {
+    level: "info",
 
-        enabled: true,
+    timestamp: true,
 
-        directory: "reports/screenshots",
+    colors: true,
+  },
 
-        fullPage: true,
+  performance: {
+    enabled: true,
 
-        captureOnFailure: true,
+    logExecutionTime: true,
 
-        captureOnSuccess: false,
+    slowActionThreshold: 3000,
+  },
 
-        timestamp: true,
+  wait: {
+    pollingInterval: 200,
 
-    },
+    stableElementTimeout: 500,
+  },
 
-    logging: {
+  framework: {
+    strictMode: true,
 
-        enabled: true,
+    continueOnFailure: false,
 
-        level: "info",
+    captureConsoleLogs: false,
+  },
 
-        timestamp: true,
+  allure: {
+    enabled: true,
 
-        colors: true,
+    environmentInfo: true,
 
-    },
+    attachScreenshots: true,
 
-    performance: {
+    attachVideos: true,
 
-        enabled: true,
+    attachApiDetails: true,
 
-        logExecutionTime: true,
+    resultsDir: "allure-results",
 
-        slowActionThreshold: 3000,
+    redactFields: [
+      "authorization",
+      "cookie",
+      "password",
+      "token",
+      "secret",
+      "apiKey",
+      "api_key",
+    ],
+  },
 
-    },
+  execution: {
+    fullyParallel: false,
 
-    wait: {
-
-        pollingInterval: 200,
-
-        stableElementTimeout: 500,
-
-    },
-
-    framework: {
-
-        strictMode: true,
-
-        continueOnFailure: false,
-
-        captureConsoleLogs: false,
-
-    },
-
-    allure: {
-
-        enabled: false,
-
-        environmentInfo: true,
-
-        attachScreenshots: true,
-
-        attachVideos: true,
-
-    },
-
-    execution: {
-
-        fullyParallel: false,
-
-        forbidOnlyInCI: true,
-
-    },
-
+    forbidOnlyInCI: true,
+  },
 };

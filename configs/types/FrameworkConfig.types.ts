@@ -44,71 +44,72 @@ export interface ExecutionConfig {
 }
 
 export interface ScreenshotConfig {
-    enabled: boolean;
-    directory: string;
-    fullPage: boolean;
-    captureOnFailure: boolean;
-    captureOnSuccess: boolean;
-    timestamp: boolean;
+  enabled: boolean;
+  directory: string;
+  fullPage: boolean;
+  captureOnFailure: boolean;
+  captureOnSuccess: boolean;
+  timestamp: boolean;
 }
 
 export interface LoggingConfig {
-    enabled: boolean;
-    level: "debug" | "info" | "warn" | "error";
-    timestamp: boolean;
-    colors: boolean;
+  enabled: boolean;
+  level: "debug" | "info" | "warn" | "error";
+  timestamp: boolean;
+  colors: boolean;
 }
 
 export interface PerformanceConfig {
-    enabled: boolean;
-    logExecutionTime: boolean;
-    slowActionThreshold: number;
+  enabled: boolean;
+  logExecutionTime: boolean;
+  slowActionThreshold: number;
 }
 
 export interface WaitConfig {
-    pollingInterval: number;
-    stableElementTimeout: number;
+  pollingInterval: number;
+  stableElementTimeout: number;
 }
 
 export interface FrameworkBehaviorConfig {
-    strictMode: boolean;
-    continueOnFailure: boolean;
-    captureConsoleLogs: boolean;
+  strictMode: boolean;
+  continueOnFailure: boolean;
+  captureConsoleLogs: boolean;
 }
 
 export interface AllureConfig {
-    enabled: boolean;
-    environmentInfo: boolean;
-    attachScreenshots: boolean;
-    attachVideos: boolean;
+  enabled: boolean;
+  environmentInfo: boolean;
+  attachScreenshots: boolean;
+  attachVideos: boolean;
+  attachApiDetails: boolean;
+  resultsDir: string;
+  redactFields: string[];
 }
 
 export interface FrameworkConfiguration {
+  browser: BrowserConfig;
 
-    browser: BrowserConfig;
+  timeout: TimeoutConfig;
 
-    timeout: TimeoutConfig;
+  retry: RetryConfig;
 
-    retry: RetryConfig;
+  workers: WorkerConfig;
 
-    workers: WorkerConfig;
+  reporter: ReporterConfig;
 
-    reporter: ReporterConfig;
+  artifacts: ArtifactConfig;
 
-    artifacts: ArtifactConfig;
+  screenshot: ScreenshotConfig;
 
-    screenshot: ScreenshotConfig;
+  logging: LoggingConfig;
 
-    logging: LoggingConfig;
+  performance: PerformanceConfig;
 
-    performance: PerformanceConfig;
+  wait: WaitConfig;
 
-    wait: WaitConfig;
+  framework: FrameworkBehaviorConfig;
 
-    framework: FrameworkBehaviorConfig;
+  allure: AllureConfig;
 
-    allure: AllureConfig;
-
-    execution: ExecutionConfig;
-
+  execution: ExecutionConfig;
 }
