@@ -105,6 +105,46 @@ export interface GlobalLifecycleConfig {
   testData: GlobalTestDataConfig;
 }
 
+export type AuthenticationStrategyName = "ui" | "api" | "custom";
+
+export interface AuthRoleConfig {
+  usernameEnv: string;
+  passwordEnv: string;
+  userIdEnv?: string;
+}
+
+export interface UIAuthenticationConfig {
+  loginPath: string;
+  validationPath: string;
+  usernameSelector: string;
+  passwordSelector: string;
+  submitSelector: string;
+  authenticatedSelector: string;
+}
+
+export interface APIAuthenticationConfig {
+  loginEndpoint: string;
+  sessionValidationEndpoint: string;
+  requestPayload: Record<string, unknown>;
+  tokenJsonPath: string;
+  tokenHeaderName: string;
+  tokenPrefix: string;
+  tokenExpiryJsonPath: string;
+}
+
+export interface AuthenticationConfig {
+  enabled: boolean;
+  strategy: AuthenticationStrategyName;
+  sessionDirectory: string;
+  reuseStorageState: boolean;
+  refreshExpiredSession: boolean;
+  sessionLifetimeSeconds: number;
+  expirationSkewSeconds: number;
+  users: Record<string, AuthRoleConfig>;
+  ui: UIAuthenticationConfig;
+  api: APIAuthenticationConfig;
+}
+
 export interface FrameworkConfiguration {
   browser: BrowserConfig;
 
@@ -131,6 +171,8 @@ export interface FrameworkConfiguration {
   allure: AllureConfig;
 
   globalLifecycle: GlobalLifecycleConfig;
+
+  authentication: AuthenticationConfig;
 
   execution: ExecutionConfig;
 }

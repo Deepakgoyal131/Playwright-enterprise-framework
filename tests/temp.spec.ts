@@ -130,11 +130,7 @@ for (
         async ({ page }) => {
 
             console.log(
-                `Executing login for ${login.username}`
-            );
-
-            console.log(
-                `Password: ${login.password}`
+                `Executing login data row ${index + 1}`
             );
 
             // Later:

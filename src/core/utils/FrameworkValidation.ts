@@ -134,6 +134,107 @@ export function validateFrameworkInputs(
     issues.push("globalLifecycle.metadataPath must not be empty.");
   }
 
+  const auth = config.authentication;
+  if (auth.enabled) {
+    if (!["ui", "api", "custom"].includes(auth.strategy)) {
+      issues.push("authentication.strategy must be ui, api, or custom.");
+    }
+    if (!auth.sessionDirectory.trim()) {
+      issues.push(
+        "authentication.sessionDirectory must not be empty when authentication is enabled.",
+      );
+    }
+    if (
+      !Number.isFinite(auth.sessionLifetimeSeconds) ||
+      auth.sessionLifetimeSeconds <= 0
+    ) {
+      issues.push("authentication.sessionLifetimeSeconds must be positive.");
+    }
+    if (
+      !Number.isFinite(auth.expirationSkewSeconds) ||
+      auth.expirationSkewSeconds < 0
+    ) {
+      issues.push("authentication.expirationSkewSeconds must be non-negative.");
+    }
+    if (
+      !Object.values(auth.users).every(
+        (user) =>
+          isEnvironmentVariableName(user.usernameEnv) &&
+          isEnvironmentVariableName(user.passwordEnv) &&
+          (!user.userIdEnv || isEnvironmentVariableName(user.userIdEnv)),
+      )
+    ) {
+      issues.push(
+        "Authentication role mappings must reference valid environment variable names.",
+      );
+    }
+    if (auth.strategy === "ui") {
+      const requiredUiValues = [
+        auth.ui.loginPath,
+        auth.ui.usernameSelector,
+        auth.ui.passwordSelector,
+        auth.ui.submitSelector,
+        auth.ui.authenticatedSelector,
+      ];
+      if (requiredUiValues.some((value) => !value.trim())) {
+        issues.push(
+          "UI authentication requires a login path and configured login and authenticated-state selectors.",
+        );
+      }
+      if (
+        auth.ui.validationPath &&
+        (!auth.ui.validationPath.startsWith("/") ||
+          auth.ui.validationPath.startsWith("//") ||
+          auth.ui.validationPath.includes("?"))
+      ) {
+        issues.push(
+          "UI authentication validationPath must be a root-relative path without a query string.",
+        );
+      }
+    }
+    if (auth.strategy === "api") {
+      if (
+        !auth.api.loginEndpoint.startsWith("/") ||
+        auth.api.loginEndpoint.startsWith("//") ||
+        auth.api.loginEndpoint.includes("?")
+      ) {
+        issues.push(
+          "API authentication loginEndpoint must be a root-relative path without a query string.",
+        );
+      }
+      if (!auth.api.tokenJsonPath.trim() || !auth.api.tokenHeaderName.trim()) {
+        issues.push(
+          "API authentication requires tokenJsonPath and tokenHeaderName.",
+        );
+      }
+      if (
+        auth.api.sessionValidationEndpoint &&
+        (!auth.api.sessionValidationEndpoint.startsWith("/") ||
+          auth.api.sessionValidationEndpoint.startsWith("//") ||
+          auth.api.sessionValidationEndpoint.includes("?"))
+      ) {
+        issues.push(
+          "API authentication sessionValidationEndpoint must be a root-relative path without a query string.",
+        );
+      }
+      if (!/^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/.test(auth.api.tokenHeaderName)) {
+        issues.push(
+          "API authentication tokenHeaderName must be a valid HTTP header name.",
+        );
+      }
+      if (/[\r\n]/.test(auth.api.tokenHeaderName + auth.api.tokenPrefix)) {
+        issues.push(
+          "API authentication header configuration contains invalid line breaks.",
+        );
+      }
+      if (!containsCredentialTemplates(auth.api.requestPayload)) {
+        issues.push(
+          "API authentication requestPayload must include {{username}} and {{password}} placeholders.",
+        );
+      }
+    }
+  }
+
   return issues;
 }
 
@@ -141,6 +242,17 @@ export function isSupportedFrameworkEnvironment(
   environmentName: string,
 ): boolean {
   return supportedEnvironments.has(environmentName);
+}
+
+function isEnvironmentVariableName(value: string): boolean {
+  return /^[A-Za-z_][A-Za-z0-9_]*$/.test(value);
+}
+
+function containsCredentialTemplates(value: unknown): boolean {
+  const serialized = JSON.stringify(value) ?? "";
+  return (
+    serialized.includes("{{username}}") && serialized.includes("{{password}}")
+  );
 }
 
 function isValidApplicationUrl(value: string): boolean {

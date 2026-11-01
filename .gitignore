@@ -10,5 +10,10 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+/playwright/.auth/**
+*.storageState.json
+*.session.json
+*.storageState.json.*.tmp
+*.session.json.*.tmp
 /reports/execution-metadata.json
 /reports/execution-metadata.json.*.tmp

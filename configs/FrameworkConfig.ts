@@ -148,6 +148,37 @@ export const FrameworkConfig: Readonly<FrameworkConfiguration> = {
     },
   },
 
+  authentication: {
+    enabled: false,
+    strategy: "custom",
+    sessionDirectory: "playwright/.auth",
+    reuseStorageState: true,
+    refreshExpiredSession: true,
+    sessionLifetimeSeconds: 3600,
+    expirationSkewSeconds: 60,
+    users: {},
+    ui: {
+      loginPath: "",
+      validationPath: "",
+      usernameSelector: "",
+      passwordSelector: "",
+      submitSelector: "",
+      authenticatedSelector: "",
+    },
+    api: {
+      loginEndpoint: "",
+      sessionValidationEndpoint: "",
+      requestPayload: {
+        username: "{{username}}",
+        password: "{{password}}",
+      },
+      tokenJsonPath: "",
+      tokenHeaderName: "Authorization",
+      tokenPrefix: "Bearer",
+      tokenExpiryJsonPath: "",
+    },
+  },
+
   execution: {
     fullyParallel: false,
 
