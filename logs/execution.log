@@ -102,3 +102,6 @@
 2026-10-31T23:11:06.388Z | DEBUG | Asserting API response status is 200.
 2026-10-31T23:11:06.643Z | DEBUG | Asserting API response includes header content-type.
 2026-10-31T23:11:06.751Z | DEBUG | Sending API POST request.
+2026-11-01T00:25:46.366Z | INFO  | Global setup started for qa (4040bf34-d983-4bfe-bf70-3ce5a69a61a0).
+2026-11-01T00:25:46.367Z | INFO  | Global setup completed.
+2026-11-01T00:26:48.498Z | INFO  | Global teardown has no pending setup-created resources.

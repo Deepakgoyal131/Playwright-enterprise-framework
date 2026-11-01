@@ -39,7 +39,11 @@ if (FrameworkConfig.reporter.allure && FrameworkConfig.allure.enabled) {
   ]);
 }
 
+reporters.push(["./src/core/utils/GlobalExecutionMetadataReporter.ts"]);
+
 export default defineConfig({
+  globalSetup: "./GlobalSetup.ts",
+  globalTeardown: "./GlobalTeardown.ts",
   testDir: "./tests",
   timeout: FrameworkConfig.timeout.test,
   expect: {

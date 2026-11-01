@@ -131,6 +131,23 @@ export const FrameworkConfig: Readonly<FrameworkConfiguration> = {
     ],
   },
 
+  globalLifecycle: {
+    metadataPath: "reports/execution-metadata.json",
+
+    healthCheck: {
+      enabled: false,
+      base: "api",
+      endpoint: "",
+      timeout: 10000,
+      expectedStatus: 200,
+    },
+
+    testData: {
+      strategy: "none",
+      modulePath: "",
+    },
+  },
+
   execution: {
     fullyParallel: false,
 
