@@ -2,6 +2,11 @@ import * as dotenv from "dotenv";
 import * as fs from "fs";
 import * as path from "path";
 import { FrameworkConfig } from "./FrameworkConfig";
+import { ErrorHandler, ErrorType } from "../src/core/errors";
+import {
+  isSupportedFrameworkEnvironment,
+  validateFrameworkInputs,
+} from "../src/core/utils/FrameworkValidation";
 /**
  * Centralized Environment Configuration Manager.
  *
@@ -17,6 +22,7 @@ import { FrameworkConfig } from "./FrameworkConfig";
 export class Environment {
   private static initialized = false;
   private static _isCI = false;
+  private static _frameworkEnvironment = "qa";
   /**
    * Initialize environment configuration.
    * Should be called only once during framework startup.
@@ -26,51 +32,59 @@ export class Environment {
       return;
     }
 
-    const environment = process.env.FRAMEWORK_ENV || "qa";
+    const environment = process.env.FRAMEWORK_ENV?.trim().toLowerCase() || "qa";
+    if (!isSupportedFrameworkEnvironment(environment)) {
+      ErrorHandler.handle(
+        ErrorType.FRAMEWORK,
+        "Environment.initialize",
+        "Invalid FRAMEWORK_ENV. Supported values are dev, qa, uat, and prod.",
+        new Error("Unsupported framework environment."),
+      );
+    }
 
     const envFile = path.resolve(
       process.cwd(),
       "configs",
       "env",
-      `.env.${environment}`
+      `.env.${environment}`,
     );
 
     if (!fs.existsSync(envFile)) {
-      throw new Error(
-        `Environment file not found: ${envFile}`
+      ErrorHandler.handle(
+        ErrorType.FRAMEWORK,
+        "Environment.initialize",
+        `Environment file for '${environment}' was not found.`,
+        new Error("Selected environment file is missing."),
       );
     }
 
     dotenv.config({ path: envFile });
 
-    this.validate();
+    const issues = validateFrameworkInputs(
+      environment,
+      process.env,
+      FrameworkConfig,
+    );
+    if (issues.length > 0) {
+      ErrorHandler.handle(
+        ErrorType.FRAMEWORK,
+        "Environment.initialize",
+        issues.join(" "),
+        new Error("Framework environment or configuration validation failed."),
+      );
+    }
 
     this.initialized = true;
 
+    this._frameworkEnvironment = environment;
     this._isCI = process.env.CI?.toLowerCase() === "true";
   }
 
   /**
    * Validate mandatory environment variables.
    */
-  private static validate(): void {
-    const required = [
-      "BASE_URL",
-      "API_URL",
-      "USERNAME",
-      "PASSWORD",
-      "HEADLESS",
-    ];
-
-    const missing = required.filter(
-      key => !process.env[key]?.trim()
-    );
-
-    if (missing.length > 0) {
-      throw new Error(
-        `Missing environment variables:\n${missing.join("\n")}`
-      );
-    }
+  public static get frameworkEnvironment(): string {
+    return this._frameworkEnvironment;
   }
 
   public static get baseURL(): string {
@@ -90,15 +104,13 @@ export class Environment {
   }
 
   public static get headless(): boolean {
-    return process.env.HEADLESS === "true";
+    return process.env.HEADLESS?.toLowerCase() === "true";
   }
   public static get isCI(): boolean {
     return this._isCI;
   }
 
   public static get retryCount(): number {
-    return this.isCI
-        ? FrameworkConfig.retry.ci
-        : FrameworkConfig.retry.local;
-}
+    return this.isCI ? FrameworkConfig.retry.ci : FrameworkConfig.retry.local;
+  }
 }

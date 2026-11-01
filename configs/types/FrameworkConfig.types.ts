@@ -86,6 +86,25 @@ export interface AllureConfig {
   redactFields: string[];
 }
 
+export interface GlobalHealthCheckConfig {
+  enabled: boolean;
+  base: "api" | "app";
+  endpoint: string;
+  timeout: number;
+  expectedStatus: number;
+}
+
+export interface GlobalTestDataConfig {
+  strategy: "none" | "module";
+  modulePath: string;
+}
+
+export interface GlobalLifecycleConfig {
+  metadataPath: string;
+  healthCheck: GlobalHealthCheckConfig;
+  testData: GlobalTestDataConfig;
+}
+
 export interface FrameworkConfiguration {
   browser: BrowserConfig;
 
@@ -110,6 +129,8 @@ export interface FrameworkConfiguration {
   framework: FrameworkBehaviorConfig;
 
   allure: AllureConfig;
+
+  globalLifecycle: GlobalLifecycleConfig;
 
   execution: ExecutionConfig;
 }
