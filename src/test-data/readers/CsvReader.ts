@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { parse } from "csv-parse/sync";
 import { IKeyedDataReader } from "./IKeyedDataReader";
+import { cloneTestData } from "../helpers/cloneTestData";
 
 export class CsvReader<T extends object>
     implements IKeyedDataReader<T> {
@@ -68,7 +69,7 @@ export class CsvReader<T extends object>
      */
     public read(): T[] {
 
-        return this.data;
+        return cloneTestData(this.data);
     }
 
     /**
@@ -96,7 +97,7 @@ export class CsvReader<T extends object>
             );
         }
 
-        return record;
+        return cloneTestData(record);
     }
 
     /**

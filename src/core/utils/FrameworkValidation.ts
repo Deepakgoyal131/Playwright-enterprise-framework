@@ -1,6 +1,9 @@
 import type { FrameworkConfiguration } from "../../../configs/types/FrameworkConfig.types";
+import {
+  isProductionOptInValid,
+  resolveEnvironmentName,
+} from "./EnvironmentResolver";
 
-const supportedEnvironments = new Set(["dev", "qa", "uat", "prod"]);
 const requiredEnvironmentVariables = [
   "BASE_URL",
   "API_URL",
@@ -16,8 +19,49 @@ export function validateFrameworkInputs(
 ): string[] {
   const issues: string[] = [];
 
-  if (!supportedEnvironments.has(environmentName)) {
-    issues.push("FRAMEWORK_ENV must be one of: dev, qa, uat, prod.");
+  const resolvedName = resolveEnvironmentName(
+    environmentName,
+    config.environment.default,
+  );
+  if (!resolvedName) {
+    issues.push(
+      "FRAMEWORK_ENV must be local, dev, qa, uat, staging, or production (prod is a supported alias).",
+    );
+  }
+
+  if (
+    resolvedName &&
+    !isProductionOptInValid(resolvedName, environment, config)
+  ) {
+    issues.push(
+      `Production execution is blocked. Set ${config.environment.productionSafety.optInEnvironmentVariable}=true to continue.`,
+    );
+  }
+
+  for (const [name, value] of Object.entries(config.reporter)) {
+    if (typeof value !== "boolean") {
+      issues.push(`reporter.${name} must be a boolean.`);
+    }
+  }
+
+  if (!["off", "on", "only-on-failure"].includes(config.artifacts.screenshot)) {
+    issues.push("artifacts.screenshot has an unsupported value.");
+  }
+  if (!["off", "on", "retain-on-failure"].includes(config.artifacts.video)) {
+    issues.push("artifacts.video has an unsupported value.");
+  }
+  if (
+    !["off", "on", "retain-on-failure", "on-first-retry"].includes(
+      config.artifacts.trace,
+    )
+  ) {
+    issues.push("artifacts.trace has an unsupported value.");
+  }
+  if (
+    typeof config.execution.fullyParallel !== "boolean" ||
+    typeof config.execution.forbidOnlyInCI !== "boolean"
+  ) {
+    issues.push("execution flags must be booleans.");
   }
 
   const missingVariables = requiredEnvironmentVariables.filter(
@@ -90,6 +134,53 @@ export function validateFrameworkInputs(
         `${name} must be a positive integer or a positive percentage string.`,
       );
     }
+  }
+
+  if (
+    !resolveEnvironmentName(
+      config.environment.default,
+      config.environment.default,
+    )
+  ) {
+    issues.push(
+      "environment.default must be a supported framework environment.",
+    );
+  }
+
+  for (const [environmentName, profile] of Object.entries(
+    config.environment.profiles,
+  )) {
+    if (
+      !resolveEnvironmentName(environmentName, config.environment.default) ||
+      !profile
+    ) {
+      issues.push(`Environment profile '${environmentName}' is invalid.`);
+      continue;
+    }
+    validateExecutionOverrides(
+      `environment.profiles.${environmentName}`,
+      profile,
+      issues,
+    );
+    if (profile.ci) {
+      validateExecutionOverrides(
+        `environment.profiles.${environmentName}.ci`,
+        profile.ci,
+        issues,
+      );
+    }
+  }
+
+  const productionSafety = config.environment.productionSafety;
+  if (
+    !isEnvironmentVariableName(productionSafety.optInEnvironmentVariable) ||
+    !isEnvironmentVariableName(
+      productionSafety.destructiveOptInEnvironmentVariable,
+    )
+  ) {
+    issues.push(
+      "Production safety opt-in settings must use valid environment variable names.",
+    );
   }
 
   for (const [name, value] of [
@@ -241,7 +332,7 @@ export function validateFrameworkInputs(
 export function isSupportedFrameworkEnvironment(
   environmentName: string,
 ): boolean {
-  return supportedEnvironments.has(environmentName);
+  return resolveEnvironmentName(environmentName, "qa") !== undefined;
 }
 
 function isEnvironmentVariableName(value: string): boolean {
@@ -253,6 +344,44 @@ function containsCredentialTemplates(value: unknown): boolean {
   return (
     serialized.includes("{{username}}") && serialized.includes("{{password}}")
   );
+}
+
+function validateExecutionOverrides(
+  name: string,
+  profile: {
+    retries?: number;
+    workers?: number | string;
+    fullyParallel?: boolean;
+  },
+  issues: string[],
+): void {
+  if (
+    profile.retries !== undefined &&
+    (!Number.isInteger(profile.retries) || profile.retries < 0)
+  ) {
+    issues.push(`${name}.retries must be a non-negative integer.`);
+  }
+  if (profile.workers !== undefined) {
+    const validNumber =
+      typeof profile.workers === "number" &&
+      Number.isInteger(profile.workers) &&
+      profile.workers > 0;
+    const validPercentage =
+      typeof profile.workers === "string" &&
+      /^\d+%$/.test(profile.workers) &&
+      Number.parseInt(profile.workers, 10) > 0;
+    if (!validNumber && !validPercentage) {
+      issues.push(
+        `${name}.workers must be a positive integer or percentage string.`,
+      );
+    }
+  }
+  if (
+    profile.fullyParallel !== undefined &&
+    typeof profile.fullyParallel !== "boolean"
+  ) {
+    issues.push(`${name}.fullyParallel must be a boolean.`);
+  }
 }
 
 function isValidApplicationUrl(value: string): boolean {

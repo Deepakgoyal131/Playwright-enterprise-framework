@@ -14,6 +14,13 @@ import type {
 type StorageState = Awaited<ReturnType<BrowserContext["storageState"]>>;
 
 export class SessionManager {
+  public static workerDirectory(
+    directory: string,
+    workerIndex: number,
+  ): string {
+    return path.resolve(directory, `worker-${workerIndex}`);
+  }
+
   public constructor(
     private readonly directory: string,
     private readonly expirationSkewSeconds: number,

@@ -1,6 +1,62 @@
 # Playwright Enterprise Framework
 
-A TypeScript and Playwright framework for UI and API automation. The framework loads environment-specific values from `configs/env/.env.<environment>` and framework behavior from `configs/FrameworkConfig.ts`.
+A TypeScript and Playwright framework for UI and API automation. Environment values come from `configs/env/.env.<environment>` or the process environment; framework behavior and environment execution profiles come from `configs/FrameworkConfig.ts`.
+
+## Environment Configuration
+
+Supported environments are `local`, `dev`, `qa`, `uat`, `staging`, and `production`. The legacy name `prod` is accepted as an alias for `production`, and resolves to `.env.prod`. If `FRAMEWORK_ENV` is omitted, the framework retains the existing default of `qa`.
+
+`Environment` is the single runtime resolver for the selected environment, environment file, base URLs, execution profile, and production policy. Keep environment-specific values in `.env` files; keep framework behavior and per-environment execution overrides in `FrameworkConfig`. Tests and helpers use `Environment.baseURL` and `Environment.apiURL`, so API and UI targets stay separate without hardcoding URLs in tests.
+
+Copy `configs/env/.env.example` to the desired ignored filename, then replace placeholders using approved local secret management:
+
+```powershell
+Copy-Item configs/env/.env.example configs/env/.env.local
+Copy-Item configs/env/.env.example configs/env/.env.staging
+```
+
+The template contains only dummy `.invalid` URLs and placeholder credentials. Required keys are `BASE_URL`, `API_URL`, `USERNAME`, `PASSWORD`, and `HEADLESS`. `.env.dev` and `.env.uat` are currently empty in this checkout; supply their local configuration before using those environments. Environment files are ignored to prevent future commits. If previously tracked environment files contained real credentials, rotate them; ignore rules do not erase secrets from existing Git history.
+
+Switch environment with `FRAMEWORK_ENV` or the cross-platform npm scripts:
+
+```powershell
+npm run test:local
+npm run test:dev
+npm run test:qa
+npm run test:uat
+npm run test:staging
+npm run test:production
+```
+
+The equivalent environment-first form works in PowerShell and other shells:
+
+```powershell
+$env:FRAMEWORK_ENV = "staging"
+npx playwright test
+Remove-Item Env:FRAMEWORK_ENV
+```
+
+In bash, use `FRAMEWORK_ENV=staging npx playwright test`. `cross-env` is already installed and is used by the npm scripts.
+
+The legacy `npm run test:prod` command is retained and resolves to the same production environment as `npm run test:production`.
+
+### Execution Profiles
+
+`FrameworkConfig.environment.profiles` can override retries, workers, and `fullyParallel` per environment, with optional `ci` overrides. Missing profile overrides fall back to the existing `retry`, `workers`, and `execution` settings. `FrameworkConfig.timeout`, browser, reporter, screenshot, video, trace, and Allure settings remain shared unless explicitly overridden in these framework settings.
+
+### Production Safety
+
+Production execution is blocked by default. To run the production profile, explicitly opt in in the invoking shell:
+
+```powershell
+$env:ALLOW_PRODUCTION_TESTS = "true"
+npm run test:production
+Remove-Item Env:ALLOW_PRODUCTION_TESTS
+```
+
+The legacy `npm run test:prod` script also resolves to production and has the same guard. Destructive tests whose titles include `@destructive` are excluded in production by default. To enable them, both set `environment.productionSafety.allowDestructiveTests: true` in `FrameworkConfig` and set `ALLOW_PRODUCTION_DESTRUCTIVE_TESTS=true` in the invoking environment, in addition to the general production opt-in. Prefer not to run destructive tests against production; the guard is an explicit additional barrier, not a substitute for safe test design.
+
+Invalid environment names, missing variables, malformed URLs, invalid profiles, and absent production opt-in fail with actionable messages that identify keys/settings only and do not print their values.
 
 ## Run Tests
 
@@ -8,7 +64,7 @@ A TypeScript and Playwright framework for UI and API automation. The framework l
 npm run test:qa
 npm run test:dev
 npm run test:uat
-npm run test:prod
+npm run test:staging
 ```
 
 Playwright runs `GlobalSetup.ts` once before the test run and `GlobalTeardown.ts` after it. The framework's execution metadata reporter writes the final run status. API-only or focused tests can be selected using Playwright's standard arguments, for example:
@@ -18,7 +74,40 @@ npx playwright test tests/api
 npx playwright test tests/globalLifecycle.spec.ts
 ```
 
-The current `Environment.initialize()` requires `BASE_URL`, `API_URL`, `USERNAME`, `PASSWORD`, and `HEADLESS`. Supply real environment values through your approved local secret management process. Do not commit credentials. The checked-in `.env.dev` and `.env.uat` files are incomplete and require owner-provided values before those commands can run.
+`Environment.initialize()` validates the selected environment and required keys before Playwright starts. See [Environment Configuration](#environment-configuration) for production opt-in and `.env` setup.
+
+## Parallel Execution and Isolation
+
+Playwright owns worker scheduling. `FrameworkConfig.environment.profiles` supplies environment-specific `workers`, retries, and `fullyParallel` values; the nested `ci` profile can override those for CI. CLI options can override the worker count for an individual run:
+
+```powershell
+npx playwright test --workers=1
+npx playwright test --workers=2
+npx playwright test --workers=4
+```
+
+With `fullyParallel: false`, Playwright runs files across workers while keeping tests in each file sequential. Enable `fullyParallel` for a profile only after its tests and application data are independent. `test.describe.configure({ mode: "parallel" })` is available for explicitly parallel groups. Use `mode: "serial"` only for an unavoidable dependency; serial groups are less resilient because a failure can skip later tests in that group.
+
+The framework uses Playwright's test-scoped `page` and `context`; its `apiClient` creates and disposes a request context per test. Authenticated tests receive a new browser context per test. Reusable storage state is partitioned under a worker-specific session directory and role/user-specific files, so separate workers do not overwrite the same session cache. Browser cookies/local storage remain isolated in each context. Use separate application accounts when the service invalidates earlier sessions on a new login.
+
+JSON, CSV, and Excel reader methods return defensive copies; tests can mutate returned objects without changing the reader cache or another test's input. Use `testExecutionId` when creating unique application-owned test records or temporary filenames:
+
+```ts
+test("creates an isolated record", async ({ testExecutionId }) => {
+  const recordName = `parallel-record-${testExecutionId}`;
+  // Create only test-owned data and register its cleanup.
+});
+```
+
+The identifier includes the global run ID, Playwright test ID, and retry number. Framework diagnostics also log environment, worker index, parallel index, test ID, retry, and final status; no test title or credentials are logged. Screenshot filenames include a sanitized label and UUID to avoid collisions. Playwright continues to manage per-test video/trace/attachments in its normal result directories.
+
+### Debugging Parallel Failures
+
+- Re-run the failing test with `--workers=1` to distinguish a race from a deterministic failure; then try `--workers=2` to reproduce worker contention.
+- Check that test data uses `testExecutionId` or another unique key and that cleanup removes only records created by that test.
+- Check that tests do not mutate a shared reader result or use the same user when server-side sessions are single-session-per-account.
+- Use Playwright traces, screenshots, and the worker/test ID diagnostics to correlate failures without logging secrets.
+- Keep global test-data initialization disabled unless the configured strategy creates uniquely owned resources and has idempotent cleanup.
 
 ## Global Lifecycle Configuration
 
@@ -43,7 +132,7 @@ globalLifecycle: {
 
 The health check is disabled by default; no application-specific endpoint is assumed. When enabled, it sends a GET request to the configured relative endpoint using `API_URL` for `base: "api"` or `BASE_URL` for `base: "app"`. The expected status and timeout are configurable.
 
-Environment validation accepts `dev`, `qa`, `uat`, or `prod`, checks required values, validates absolute HTTP/HTTPS application URLs, validates the `HEADLESS` boolean, and checks positive timeout/viewport values and non-negative retry counts. Error messages identify invalid keys/settings but never include environment values.
+Environment validation accepts `local`, `dev`, `qa`, `uat`, `staging`, and `production` (`prod` is an alias), checks required values, validates absolute HTTP/HTTPS application URLs, validates the `HEADLESS` boolean, and checks positive timeout/viewport values and non-negative retry counts. Error messages identify invalid keys/settings but never include environment values.
 
 ## Optional Test Data
 

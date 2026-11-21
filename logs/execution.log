@@ -105,3 +105,9 @@
 2026-11-01T00:25:46.366Z | INFO  | Global setup started for qa (4040bf34-d983-4bfe-bf70-3ce5a69a61a0).
 2026-11-01T00:25:46.367Z | INFO  | Global setup completed.
 2026-11-01T00:26:48.498Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-01T12:08:41.674Z | INFO  | Global setup started for qa (c37d341d-7e77-48a5-b54e-535a88076b6b).
+2026-11-01T12:08:41.676Z | INFO  | Global setup completed.
+2026-11-01T12:08:41.718Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-01T12:10:09.317Z | INFO  | Global setup started for qa (e79f48c7-35fb-450d-922b-d637e83d4350).
+2026-11-01T12:10:09.318Z | INFO  | Global setup completed.
+2026-11-01T12:10:11.266Z | INFO  | Global teardown has no pending setup-created resources.

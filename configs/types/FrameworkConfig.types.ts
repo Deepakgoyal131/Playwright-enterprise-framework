@@ -145,6 +145,39 @@ export interface AuthenticationConfig {
   api: APIAuthenticationConfig;
 }
 
+export type FrameworkEnvironmentName =
+  "local" | "dev" | "qa" | "uat" | "staging" | "production";
+
+export interface EnvironmentExecutionProfile {
+  retries?: number;
+  workers?: string | number;
+  fullyParallel?: boolean;
+  ci?: EnvironmentExecutionOverrides;
+}
+
+export interface EnvironmentExecutionOverrides {
+  retries?: number;
+  workers?: string | number;
+  fullyParallel?: boolean;
+}
+
+export interface ProductionSafetyConfig {
+  enabled: boolean;
+  requireExplicitOptIn: boolean;
+  optInEnvironmentVariable: string;
+  excludeDestructiveTests: boolean;
+  allowDestructiveTests: boolean;
+  destructiveOptInEnvironmentVariable: string;
+}
+
+export interface EnvironmentExecutionConfig {
+  default: FrameworkEnvironmentName;
+  profiles: Partial<
+    Record<FrameworkEnvironmentName, EnvironmentExecutionProfile>
+  >;
+  productionSafety: ProductionSafetyConfig;
+}
+
 export interface FrameworkConfiguration {
   browser: BrowserConfig;
 
@@ -173,6 +206,8 @@ export interface FrameworkConfiguration {
   globalLifecycle: GlobalLifecycleConfig;
 
   authentication: AuthenticationConfig;
+
+  environment: EnvironmentExecutionConfig;
 
   execution: ExecutionConfig;
 }

@@ -30,7 +30,7 @@ if (FrameworkConfig.reporter.allure && FrameworkConfig.allure.enabled) {
       detail: true,
       environmentInfo: FrameworkConfig.allure.environmentInfo
         ? {
-            environment: process.env.FRAMEWORK_ENV || "qa",
+            environment: Environment.frameworkEnvironment,
             nodeVersion: process.version,
             platform: process.platform,
           }
@@ -49,16 +49,15 @@ export default defineConfig({
   expect: {
     timeout: FrameworkConfig.timeout.expect,
   },
-  retries: Environment.isCI
-    ? FrameworkConfig.retry.ci
-    : FrameworkConfig.retry.local,
-  workers: Environment.isCI
-    ? FrameworkConfig.workers.ci
-    : FrameworkConfig.workers.local,
+  retries: Environment.retries,
+  workers: Environment.workers,
   reporter: reporters,
 
   /* Run tests in files in parallel */
-  fullyParallel: FrameworkConfig.execution.fullyParallel,
+  fullyParallel: Environment.fullyParallel,
+  grepInvert: Environment.shouldExcludeDestructiveTests
+    ? /@destructive/
+    : undefined,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!Environment.isCI,
 

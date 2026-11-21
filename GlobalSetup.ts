@@ -21,6 +21,7 @@ import {
 
 export default async function globalSetup(_config: FullConfig): Promise<void> {
   Environment.initialize();
+  Environment.validate();
   const lifecycleConfig = FrameworkConfig.globalLifecycle;
   const metadataPath = path.resolve(
     process.cwd(),

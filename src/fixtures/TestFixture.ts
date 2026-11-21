@@ -18,6 +18,11 @@ import {
   UIAuthStrategy,
 } from "../auth";
 import type { AuthSession, AuthStrategy } from "../auth/types/Auth.types";
+import { SessionManager } from "../auth/SessionManager";
+import {
+  createTestExecutionDetails,
+  TestExecutionDiagnostics,
+} from "../core/utils/TestExecutionDiagnostics";
 
 export interface TestFixtures {
   apiClient: APIClient;
@@ -25,6 +30,8 @@ export interface TestFixtures {
   authenticatedContext: BrowserContext;
   authenticatedPage: Page;
   authenticatedApiClient: APIClient;
+  testExecutionId: string;
+  testDiagnostics: void;
 }
 
 export interface AuthFixtureOptions {
@@ -35,6 +42,26 @@ export interface AuthFixtureOptions {
 export const test = base.extend<TestFixtures & AuthFixtureOptions>({
   authRole: ["", { option: true }],
   authStrategy: [undefined, { option: true }],
+
+  testExecutionId: async ({}, use, testInfo) => {
+    await use(createTestExecutionDetails(testInfo).executionId);
+  },
+
+  testDiagnostics: [
+    async ({}, use, testInfo) => {
+      const details = createTestExecutionDetails(testInfo);
+      TestExecutionDiagnostics.started(details);
+      try {
+        await use();
+      } finally {
+        TestExecutionDiagnostics.finished(
+          details,
+          testInfo.status ?? "unknown",
+        );
+      }
+    },
+    { auto: true },
+  ],
 
   page: async ({ page }, use, testInfo) => {
     await use(page);
@@ -77,7 +104,7 @@ export const test = base.extend<TestFixtures & AuthFixtureOptions>({
     }
   },
 
-  authSession: async ({ browser, authRole, authStrategy }, use) => {
+  authSession: async ({ browser, authRole, authStrategy }, use, testInfo) => {
     if (!authRole) {
       ErrorHandler.handle(
         ErrorType.FRAMEWORK,
@@ -87,7 +114,13 @@ export const test = base.extend<TestFixtures & AuthFixtureOptions>({
       );
     }
 
-    const config = FrameworkConfig.authentication;
+    const config = {
+      ...FrameworkConfig.authentication,
+      sessionDirectory: SessionManager.workerDirectory(
+        FrameworkConfig.authentication.sessionDirectory,
+        testInfo.workerIndex,
+      ),
+    };
     const user = resolveAuthUser(authRole, config);
     const strategies: Partial<Record<"ui" | "api" | "custom", AuthStrategy>> = {
       ui: new UIAuthStrategy(

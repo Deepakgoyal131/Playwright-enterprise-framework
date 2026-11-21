@@ -179,6 +179,56 @@ export const FrameworkConfig: Readonly<FrameworkConfiguration> = {
     },
   },
 
+  environment: {
+    default: "qa",
+    profiles: {
+      local: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 1, workers: "100%", fullyParallel: false },
+      },
+      dev: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      qa: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      uat: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      staging: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      production: {
+        retries: 0,
+        workers: 1,
+        fullyParallel: false,
+        ci: { retries: 0, workers: 1, fullyParallel: false },
+      },
+    },
+    productionSafety: {
+      enabled: true,
+      requireExplicitOptIn: true,
+      optInEnvironmentVariable: "ALLOW_PRODUCTION_TESTS",
+      excludeDestructiveTests: true,
+      allowDestructiveTests: false,
+      destructiveOptInEnvironmentVariable: "ALLOW_PRODUCTION_DESTRUCTIVE_TESTS",
+    },
+  },
+
   execution: {
     fullyParallel: false,
 
