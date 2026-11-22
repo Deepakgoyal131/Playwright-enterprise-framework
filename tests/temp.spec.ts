@@ -1,12 +1,13 @@
 import { Faker } from '@faker-js/faker/.';
-import {test, expect} from '@playwright/test'
+import { expect } from "@playwright/test";
+import { test } from "@fixtures/BaseTest";
 
+import { ClickHelper, WaitHelper, FillHelper } from '@core/helpers/interaction';
+import { ScreenshotHelper } from '@core/helpers/diagnostics/ScreenshotHelper';
+import { AssertionHelper } from '@core/helpers/assertions/AssertionHelper';
+import { FakerFactory, TestDataManager, TestDataFactory, DataDrivenHelper, ExcelReader } from '@test-data';
 
-// import { ClickHelper, WaitHelper, FillHelper } from '@core/helpers/interaction';
-// import { ScreenshotHelper } from '@core/helpers/diagnostics/ScreenshotHelper';
-// import { AssertionHelper } from '@core/helpers/assertions/AssertionHelper';
-// import { FakerFactory, TestDataManager, TestDataFactory, DataDrivenHelper, ExcelReader } from '@test-data';
-import { ExcelReader, LoginData } from "@test-data";
+// import { ExcelReader, LoginData } from "@test-data";
 // import { LoginData } from '@test-data';
 
 // test("check Click Helper", async ({page}) => {
@@ -107,39 +108,56 @@ for (
 */
 
 
-const reader =
-    new ExcelReader<LoginData>(
-        "login.xlsx",
-        "Sheet1"
-    );
+// const reader =
+//     new ExcelReader<LoginData>(
+//         "login.xlsx",
+//         "Sheet1"
+//     );
 
-const data =
-    reader.read();
+// const data =
+//     reader.read();
 
-for (
-    let index = 0;
-    index < data.length;
-    index++
-) {
+// for (
+//     let index = 0;
+//     index < data.length;
+//     index++
+// ) {
 
-    const login =
-        data[index];
+//     const login =
+//         data[index];
 
-    test(
-        `Login - ${login.username}`,
-        async ({ page }) => {
+//     test(
+//         `Login - ${login.username}`,
+//         async ({ page }) => {
 
-            console.log(
-                `Executing login data row ${index + 1}`
-            );
+//             console.log(
+//                 `Executing login data row ${index + 1}`
+//             );
 
-            // Later:
-            // const loginPage = new LoginPage(page);
-            // await loginPage.login(
-            //     login.username,
-            //     login.password
-            // );
+//             // Later:
+//             // const loginPage = new LoginPage(page);
+//             // await loginPage.login(
+//             //     login.username,
+//             //     login.password
+//             // );
 
-        }
-    );
-}
+//         }
+//     );
+// }
+
+test.describe("Viewer API", () => {
+    test.use({ authRole: "viewer" });
+
+    test("Api testing", async ({ authenticatedApiClient }) => {
+        const response = await authenticatedApiClient.post(
+            "/cms/information/add", 
+        {
+            data: {
+                info: "INfo via automation"
+            }
+           
+        });
+        console.log(await response.json())
+        expect(response.ok()).toBe(true);
+    });
+});

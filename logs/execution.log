@@ -1,113 +1,73 @@
-2026-08-02T09:22:34.540Z | INFO  | Framework started
-2026-08-02T09:22:34.542Z | WARN  | Retrying click
-2026-08-02T09:22:34.543Z | ERROR | Login failed
-2026-08-02T09:22:34.544Z | DEBUG | Locator resolved
-2026-08-02T10:36:14.852Z | DEBUG | Starting click action.
-2026-08-02T10:36:14.853Z | DEBUG | Waiting for element to become visible.
-2026-08-02T10:36:16.066Z | INFO  | Element became visible.
-2026-08-02T10:36:16.067Z | DEBUG | Waiting for element to become enabled.
-2026-08-02T10:36:16.129Z | INFO  | Element is enabled.
-2026-08-02T10:36:16.986Z | INFO  | Click action completed successfully.
-2026-08-02T10:36:16.987Z | DEBUG | Waiting for text: Your username is invalid!
-2026-08-02T10:36:17.019Z | INFO  | Expected text appeared.
-2026-08-02T11:57:33.849Z | DEBUG | Filling value: "student"
-2026-08-02T11:57:33.864Z | DEBUG | [FillHelper.fill] Attempt 1/1
-2026-08-02T11:57:33.866Z | DEBUG | Waiting for element to become visible.
-2026-08-02T11:57:34.057Z | INFO  | Element became visible.
-2026-08-02T11:57:34.058Z | DEBUG | Waiting for element to become enabled.
-2026-08-02T11:57:34.080Z | INFO  | Element is enabled.
-2026-08-02T11:57:34.248Z | INFO  | Value entered successfully.
-2026-08-02T11:57:34.249Z | DEBUG | Filling value: "Password123"
-2026-08-02T11:57:34.251Z | DEBUG | [FillHelper.fill] Attempt 1/1
-2026-08-02T11:57:34.252Z | DEBUG | Waiting for element to become visible.
-2026-08-02T11:57:34.261Z | INFO  | Element became visible.
-2026-08-02T11:57:34.262Z | DEBUG | Waiting for element to become enabled.
-2026-08-02T11:57:34.275Z | INFO  | Element is enabled.
-2026-08-02T11:57:34.501Z | INFO  | Value entered successfully.
-2026-08-02T11:57:34.502Z | DEBUG | Starting click action.
-2026-08-02T11:57:34.504Z | DEBUG | [ClickHelper.click] Attempt 1/1
-2026-08-02T11:57:34.505Z | DEBUG | Waiting for element to become visible.
-2026-08-02T11:57:34.533Z | INFO  | Element became visible.
-2026-08-02T11:57:34.534Z | DEBUG | Waiting for element to become enabled.
-2026-08-02T11:57:34.545Z | INFO  | Element is enabled.
-2026-08-02T11:57:37.844Z | INFO  | Click action completed successfully.
-2026-08-02T11:57:37.845Z | DEBUG | Waiting for text: Logged In Successfully
-2026-08-02T11:57:38.104Z | INFO  | Expected text appeared.
-2026-08-09T10:44:04.311Z | DEBUG | Starting FillHelper.fill
-2026-08-09T10:44:04.374Z | DEBUG | [FillHelper.fill] Attempt 1/1
-2026-08-09T10:44:04.375Z | DEBUG | Waiting for element to become visible.
-2026-08-09T10:44:04.787Z | INFO  | Element became visible.
-2026-08-09T10:44:04.788Z | DEBUG | Waiting for element to become enabled.
-2026-08-09T10:44:04.801Z | INFO  | Element is enabled.
-2026-08-09T10:44:05.004Z | INFO  | Value entered successfully.
-2026-08-09T10:44:05.021Z | DEBUG | Duration: 630.74 ms | Retries: 0
-2026-08-09T10:44:05.022Z | DEBUG | Starting FillHelper.fill
-2026-08-09T10:44:05.024Z | DEBUG | [FillHelper.fill] Attempt 1/1
-2026-08-09T10:44:05.025Z | DEBUG | Waiting for element to become visible.
-2026-08-09T10:44:05.037Z | INFO  | Element became visible.
-2026-08-09T10:44:05.038Z | DEBUG | Waiting for element to become enabled.
-2026-08-09T10:44:05.050Z | INFO  | Element is enabled.
-2026-08-09T10:44:05.251Z | INFO  | Value entered successfully.
-2026-08-09T10:44:05.252Z | DEBUG | Duration: 227.25 ms | Retries: 0
-2026-08-09T10:44:05.253Z | DEBUG | Starting ClickHelper.click
-2026-08-09T10:44:05.254Z | DEBUG | [ClickHelper.click] Attempt 1/1
-2026-08-09T10:44:05.255Z | DEBUG | Waiting for element to become visible.
-2026-08-09T10:44:05.287Z | INFO  | Element became visible.
-2026-08-09T10:44:05.288Z | DEBUG | Waiting for element to become enabled.
-2026-08-09T10:44:05.319Z | INFO  | Element is enabled.
-2026-08-09T10:44:09.834Z | INFO  | Element clicked successfully.
-2026-08-09T10:44:09.835Z | DEBUG | Duration: 4580.24 ms | Retries: 0
-2026-08-09T10:44:09.837Z | DEBUG | Waiting for text: Logged In Successfully
-2026-08-09T10:44:10.039Z | INFO  | Expected text appeared.
-2026-08-09T11:31:28.420Z | DEBUG | Starting FillHelper.fill
-2026-08-09T11:31:28.461Z | DEBUG | [FillHelper.fill] Attempt 1/1
-2026-08-09T11:31:28.462Z | DEBUG | Waiting for element to become visible.
-2026-08-09T11:31:29.052Z | INFO  | Element became visible.
-2026-08-09T11:31:29.053Z | DEBUG | Waiting for element to become enabled.
-2026-08-09T11:31:29.067Z | INFO  | Element is enabled.
-2026-08-09T11:31:29.793Z | INFO  | Value entered successfully.
-2026-08-09T11:31:29.823Z | DEBUG | Duration: 1332.47 ms | Retries: 0
-2026-08-09T11:31:30.947Z | INFO  | Screenshot saved : reports\screenshots\Login Page_2026-08-09T11-31-29-826Z.png
-2026-08-09T11:31:30.949Z | DEBUG | Starting FillHelper.fill
-2026-08-09T11:31:30.950Z | DEBUG | [FillHelper.fill] Attempt 1/1
-2026-08-09T11:31:30.950Z | DEBUG | Waiting for element to become visible.
-2026-08-09T11:31:30.962Z | INFO  | Element became visible.
-2026-08-09T11:31:30.963Z | DEBUG | Waiting for element to become enabled.
-2026-08-09T11:31:30.972Z | INFO  | Element is enabled.
-2026-08-09T11:31:31.094Z | INFO  | Value entered successfully.
-2026-08-09T11:31:31.097Z | DEBUG | Duration: 144.71 ms | Retries: 0
-2026-08-09T11:31:31.247Z | INFO  | Element screenshot saved : reports\screenshots\Screenshot_2026-08-09T11-31-31-100Z.png
-2026-08-09T11:31:31.250Z | DEBUG | Starting ClickHelper.click
-2026-08-09T11:31:31.251Z | DEBUG | [ClickHelper.click] Attempt 1/1
-2026-08-09T11:31:31.255Z | DEBUG | Waiting for element to become visible.
-2026-08-09T11:31:31.272Z | INFO  | Element became visible.
-2026-08-09T11:31:31.274Z | DEBUG | Waiting for element to become enabled.
-2026-08-09T11:31:31.288Z | INFO  | Element is enabled.
-2026-08-09T11:31:33.076Z | INFO  | Element clicked successfully.
-2026-08-09T11:31:33.077Z | DEBUG | Duration: 1824.66 ms | Retries: 0
-2026-08-09T11:31:33.078Z | DEBUG | Waiting for text: Logged In Successfully
-2026-08-09T11:31:33.133Z | INFO  | Expected text appeared.
-2026-08-09T11:31:33.134Z | DEBUG | Asserting text: "Logged In Successfully!"
-2026-08-09T11:31:43.478Z | ERROR | [ASSERTION] AssertionHelper.assertText : Expected text: "Logged In Successfully!"
-2026-10-31T23:00:23.227Z | DEBUG | Sending API POST request.
-2026-10-31T23:00:24.131Z | INFO  | API POST request completed with status 200.
-2026-10-31T23:00:24.132Z | DEBUG | Asserting API response status is 200.
-2026-10-31T23:00:24.143Z | DEBUG | Asserting API response includes header content-type.
-2026-10-31T23:00:24.203Z | DEBUG | Sending API POST request.
-2026-10-31T23:00:24.729Z | INFO  | API POST request completed with status 400.
-2026-10-31T23:00:24.730Z | DEBUG | Asserting API response status is 400.
-2026-10-31T23:00:24.733Z | DEBUG | Asserting API response JSON contains the expected properties.
-2026-10-31T23:11:04.025Z | DEBUG | Sending API POST request.
-2026-10-31T23:11:06.386Z | INFO  | API POST request completed with status 200.
-2026-10-31T23:11:06.388Z | DEBUG | Asserting API response status is 200.
-2026-10-31T23:11:06.643Z | DEBUG | Asserting API response includes header content-type.
-2026-10-31T23:11:06.751Z | DEBUG | Sending API POST request.
-2026-11-01T00:25:46.366Z | INFO  | Global setup started for qa (4040bf34-d983-4bfe-bf70-3ce5a69a61a0).
-2026-11-01T00:25:46.367Z | INFO  | Global setup completed.
-2026-11-01T00:26:48.498Z | INFO  | Global teardown has no pending setup-created resources.
-2026-11-01T12:08:41.674Z | INFO  | Global setup started for qa (c37d341d-7e77-48a5-b54e-535a88076b6b).
-2026-11-01T12:08:41.676Z | INFO  | Global setup completed.
-2026-11-01T12:08:41.718Z | INFO  | Global teardown has no pending setup-created resources.
-2026-11-01T12:10:09.317Z | INFO  | Global setup started for qa (e79f48c7-35fb-450d-922b-d637e83d4350).
-2026-11-01T12:10:09.318Z | INFO  | Global setup completed.
-2026-11-01T12:10:11.266Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T11:26:12.743Z | INFO  | Global setup started for dev (b4cd656f-83c6-48a0-bd0f-aeeaef3608a6).
+2026-11-22T11:26:12.745Z | INFO  | Global setup completed.
+2026-11-22T11:26:14.233Z | INFO  | [TEST START] execution=b4cd656f-83c6-48a0-bd0f-aeeaef3608a6-ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1 retry=0
+2026-11-22T11:26:19.746Z | DEBUG | Asserting text: "Welcome, Test!"
+2026-11-22T11:26:19.829Z | INFO  | Assertion passed: Text matches.
+2026-11-22T11:26:20.568Z | INFO  | [TEST END] execution=b4cd656f-83c6-48a0-bd0f-aeeaef3608a6-ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1 retry=0 status=passed
+2026-11-22T11:26:22.754Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T11:28:23.001Z | INFO  | Global setup started for dev (66ef53ae-f4bf-459d-8916-17d805a798a5).
+2026-11-22T11:28:23.002Z | INFO  | Global setup completed.
+2026-11-22T11:28:24.671Z | INFO  | [TEST START] execution=66ef53ae-f4bf-459d-8916-17d805a798a5-ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1 retry=0
+2026-11-22T11:28:28.826Z | DEBUG | Asserting text: "Welcom, Test!"
+2026-11-22T11:28:38.906Z | ERROR | [ASSERTION] AssertionHelper.assertText : Expected text: "Welcom, Test!"
+2026-11-22T11:28:40.498Z | INFO  | [TEST END] execution=66ef53ae-f4bf-459d-8916-17d805a798a5-ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-3cbcae98cf514f51d8b1 retry=0 status=failed
+2026-11-22T11:28:41.979Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T12:34:04.099Z | INFO  | Global setup started for dev (dec517b0-868f-40db-a2ec-042f55ffd0af).
+2026-11-22T12:34:04.147Z | INFO  | Global setup completed.
+2026-11-22T12:34:08.804Z | INFO  | [TEST START] execution=dec517b0-868f-40db-a2ec-042f55ffd0af-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T12:34:43.114Z | DEBUG | Asserting text: "Welcome, Test!"
+2026-11-22T12:34:44.128Z | INFO  | Assertion passed: Text matches.
+2026-11-22T12:34:45.841Z | INFO  | [TEST END] execution=dec517b0-868f-40db-a2ec-042f55ffd0af-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=passed
+2026-11-22T12:34:51.169Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T12:42:57.261Z | INFO  | Global setup started for dev (df462c0e-6f29-421a-b3e1-28eb1c5f85cb).
+2026-11-22T12:42:57.262Z | INFO  | Global setup completed.
+2026-11-22T12:43:01.214Z | INFO  | [TEST START] execution=df462c0e-6f29-421a-b3e1-28eb1c5f85cb-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T12:44:00.740Z | INFO  | [TEST END] execution=df462c0e-6f29-421a-b3e1-28eb1c5f85cb-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T12:44:07.182Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T12:44:53.047Z | INFO  | Global setup started for dev (d4793422-1266-4cd5-9909-159794e6c729).
+2026-11-22T12:44:53.124Z | INFO  | Global setup completed.
+2026-11-22T12:44:55.229Z | INFO  | [TEST START] execution=d4793422-1266-4cd5-9909-159794e6c729-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T12:45:12.020Z | INFO  | [TEST END] execution=d4793422-1266-4cd5-9909-159794e6c729-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T12:45:14.322Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T12:47:29.904Z | INFO  | Global setup started for dev (95176fe4-3e3b-41f7-8d6c-6733ca6efc0a).
+2026-11-22T12:47:29.906Z | INFO  | Global setup completed.
+2026-11-22T12:47:31.388Z | INFO  | [TEST START] execution=95176fe4-3e3b-41f7-8d6c-6733ca6efc0a-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T12:47:37.911Z | INFO  | [TEST END] execution=95176fe4-3e3b-41f7-8d6c-6733ca6efc0a-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T12:47:41.203Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T12:54:09.625Z | INFO  | Global setup started for dev (37cd28e1-5c48-4e2c-9ace-34959a5aa4a5).
+2026-11-22T12:54:09.645Z | INFO  | Global setup completed.
+2026-11-22T12:54:13.987Z | INFO  | [TEST START] execution=37cd28e1-5c48-4e2c-9ace-34959a5aa4a5-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T12:56:01.584Z | INFO  | [TEST END] execution=37cd28e1-5c48-4e2c-9ace-34959a5aa4a5-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T12:56:12.469Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T12:56:46.014Z | INFO  | Global setup started for dev (12a7b5a6-c512-4a91-a511-af8bc67e3505).
+2026-11-22T12:56:46.016Z | INFO  | Global setup completed.
+2026-11-22T12:56:50.387Z | INFO  | [TEST START] execution=12a7b5a6-c512-4a91-a511-af8bc67e3505-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T12:57:27.187Z | INFO  | [TEST END] execution=12a7b5a6-c512-4a91-a511-af8bc67e3505-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T12:57:37.175Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T13:00:58.581Z | INFO  | Global setup started for dev (f0542c29-a4a4-437d-b5c7-efef1bcde40c).
+2026-11-22T13:00:58.582Z | INFO  | Global setup completed.
+2026-11-22T13:01:02.667Z | INFO  | [TEST START] execution=f0542c29-a4a4-437d-b5c7-efef1bcde40c-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T13:01:31.490Z | DEBUG | Starting FileUploadHelper.upload
+2026-11-22T13:01:31.492Z | DEBUG | [FileUploadHelper.upload] Attempt 1/1
+2026-11-22T13:01:48.454Z | WARN  | [FileUploadHelper.upload] Failed on attempt 1
+2026-11-22T13:01:48.455Z | ERROR | [UPLOAD] FileUploadHelper.upload : Failed to upload file: D:\Sample Doc.pdf
+2026-11-22T13:01:56.103Z | INFO  | [TEST END] execution=f0542c29-a4a4-437d-b5c7-efef1bcde40c-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T13:02:01.605Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T13:06:51.621Z | INFO  | Global setup started for dev (74dcbeda-b548-4a6c-9e4f-c566e6e3cbd0).
+2026-11-22T13:06:51.623Z | INFO  | Global setup completed.
+2026-11-22T13:06:54.632Z | INFO  | [TEST START] execution=74dcbeda-b548-4a6c-9e4f-c566e6e3cbd0-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T13:07:45.005Z | DEBUG | Starting FileUploadHelper.upload
+2026-11-22T13:07:45.006Z | DEBUG | [FileUploadHelper.upload] Attempt 1/1
+2026-11-22T13:08:00.749Z | WARN  | [FileUploadHelper.upload] Failed on attempt 1
+2026-11-22T13:08:00.751Z | ERROR | [UPLOAD] FileUploadHelper.upload : Failed to upload file: D:\Sample Doc.pdf
+2026-11-22T13:08:08.146Z | INFO  | [TEST END] execution=74dcbeda-b548-4a6c-9e4f-c566e6e3cbd0-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T13:08:15.310Z | INFO  | Global teardown has no pending setup-created resources.
+2026-11-22T13:11:40.240Z | INFO  | Global setup started for dev (ad8b862c-6fa7-4f49-8061-d5624f6f8ad2).
+2026-11-22T13:11:40.241Z | INFO  | Global setup completed.
+2026-11-22T13:11:43.136Z | INFO  | [TEST START] execution=ad8b862c-6fa7-4f49-8061-d5624f6f8ad2-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0
+2026-11-22T13:11:51.954Z | DEBUG | Starting FileUploadHelper.upload
+2026-11-22T13:11:51.955Z | DEBUG | [FileUploadHelper.upload] Attempt 1/1
+2026-11-22T13:12:12.138Z | WARN  | [FileUploadHelper.upload] Failed on attempt 1
+2026-11-22T13:12:12.139Z | ERROR | [UPLOAD] FileUploadHelper.upload : Failed to upload file: D:\Sample Doc.pdf
+2026-11-22T13:12:14.866Z | INFO  | [TEST END] execution=ad8b862c-6fa7-4f49-8061-d5624f6f8ad2-ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5-retry-0 environment=dev worker=0 parallel=0 testId=ec96ac029c8e337aebfd-6830c4c5fb18274cd2b5 retry=0 status=failed
+2026-11-22T13:12:16.457Z | INFO  | Global teardown has no pending setup-created resources.

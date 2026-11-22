@@ -26,7 +26,7 @@ export const FrameworkConfig: Readonly<FrameworkConfiguration> = {
   timeout: {
     test: 120000,
 
-    action: 15000,
+    action: 20000,
 
     navigation: 30000,
 
@@ -150,31 +150,36 @@ export const FrameworkConfig: Readonly<FrameworkConfiguration> = {
 
   authentication: {
     enabled: false,
-    strategy: "custom",
+    strategy: "ui",
     sessionDirectory: "playwright/.auth",
     reuseStorageState: true,
     refreshExpiredSession: true,
     sessionLifetimeSeconds: 3600,
     expirationSkewSeconds: 60,
-    users: {},
+    users: {
+      viewer: {
+        usernameEnv: "AUTH_VIEWER_USERNAME",
+        passwordEnv: "AUTH_VIEWER_PASSWORD",
+      }
+    },
     ui: {
-      loginPath: "",
-      validationPath: "",
-      usernameSelector: "",
-      passwordSelector: "",
-      submitSelector: "",
-      authenticatedSelector: "",
+      loginPath: "/practice-test-login",
+      validationPath: "/logged-in-successfully",
+      usernameSelector: "#username",
+      passwordSelector: "#password",
+      submitSelector: "#submit",
+      authenticatedSelector: ".post-title",
     },
     api: {
-      loginEndpoint: "",
-      sessionValidationEndpoint: "",
+      loginEndpoint: "/cms/admin/login",
+      sessionValidationEndpoint: "/cms/notice",
       requestPayload: {
         username: "{{username}}",
         password: "{{password}}",
       },
-      tokenJsonPath: "",
-      tokenHeaderName: "Authorization",
-      tokenPrefix: "Bearer",
+      tokenJsonPath: "token",
+      tokenHeaderName: "x-auth-token",
+      tokenPrefix: "",
       tokenExpiryJsonPath: "",
     },
   },

@@ -18,8 +18,7 @@ export class FileUploadHelper {
         filePath: string
     ): Promise<void> {
 
-        const absolutePath =
-            path.resolve(filePath);
+        const absolutePath = path.resolve(filePath);
 
         if (!fs.existsSync(absolutePath)) {
             throw new Error(`Upload file not found: ${absolutePath}`);
@@ -32,6 +31,7 @@ export class FileUploadHelper {
             failureMessage: `Failed to upload file: ${absolutePath}`,
             action: async () => {
                 await locator.setInputFiles(absolutePath);
+                
             }
         });
     }
