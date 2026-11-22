@@ -3,10 +3,14 @@ import * as fs from "fs";
 import * as path from "path";
 import { FrameworkConfig } from "./FrameworkConfig";
 import { ErrorHandler, ErrorType } from "../src/core/errors";
+import type { FrameworkEnvironmentName } from "./types/FrameworkConfig.types";
 import {
-  isSupportedFrameworkEnvironment,
-  validateFrameworkInputs,
-} from "../src/core/utils/FrameworkValidation";
+  resolveEnvironmentFileName,
+  resolveEnvironmentName,
+  resolveExecutionProfile,
+  shouldExcludeDestructiveProductionTests,
+} from "../src/core/utils/EnvironmentResolver";
+import { validateFrameworkInputs } from "../src/core/utils/FrameworkValidation";
 /**
  * Centralized Environment Configuration Manager.
  *
@@ -22,7 +26,8 @@ import {
 export class Environment {
   private static initialized = false;
   private static _isCI = false;
-  private static _frameworkEnvironment = "qa";
+  private static _frameworkEnvironment: FrameworkEnvironmentName =
+    FrameworkConfig.environment.default;
   /**
    * Initialize environment configuration.
    * Should be called only once during framework startup.
@@ -32,12 +37,15 @@ export class Environment {
       return;
     }
 
-    const environment = process.env.FRAMEWORK_ENV?.trim().toLowerCase() || "qa";
-    if (!isSupportedFrameworkEnvironment(environment)) {
+    const environment = resolveEnvironmentName(
+      process.env.FRAMEWORK_ENV,
+      FrameworkConfig.environment.default,
+    );
+    if (!environment) {
       ErrorHandler.handle(
         ErrorType.FRAMEWORK,
         "Environment.initialize",
-        "Invalid FRAMEWORK_ENV. Supported values are dev, qa, uat, and prod.",
+        "Invalid FRAMEWORK_ENV. Supported values are local, dev, qa, uat, staging, and production (prod is a supported alias).",
         new Error("Unsupported framework environment."),
       );
     }
@@ -46,7 +54,7 @@ export class Environment {
       process.cwd(),
       "configs",
       "env",
-      `.env.${environment}`,
+      resolveEnvironmentFileName(environment),
     );
 
     if (!fs.existsSync(envFile)) {
@@ -87,6 +95,54 @@ export class Environment {
     return this._frameworkEnvironment;
   }
 
+  public static validate(): void {
+    const issues = validateFrameworkInputs(
+      this.frameworkEnvironment,
+      process.env,
+      FrameworkConfig,
+    );
+    if (issues.length > 0) {
+      ErrorHandler.handle(
+        ErrorType.FRAMEWORK,
+        "Environment.validate",
+        issues.join(" "),
+        new Error("Environment configuration validation failed."),
+      );
+    }
+  }
+
+  public static get isProduction(): boolean {
+    return this._frameworkEnvironment === "production";
+  }
+
+  public static get shouldExcludeDestructiveTests(): boolean {
+    return shouldExcludeDestructiveProductionTests(
+      this._frameworkEnvironment,
+      process.env,
+      FrameworkConfig,
+    );
+  }
+
+  private static get executionProfile() {
+    return resolveExecutionProfile(
+      this._frameworkEnvironment,
+      this.isCI,
+      FrameworkConfig,
+    );
+  }
+
+  public static get retries(): number {
+    return this.executionProfile.retries;
+  }
+
+  public static get workers(): string | number {
+    return this.executionProfile.workers;
+  }
+
+  public static get fullyParallel(): boolean {
+    return this.executionProfile.fullyParallel;
+  }
+
   public static get baseURL(): string {
     return process.env.BASE_URL!;
   }
@@ -111,6 +167,6 @@ export class Environment {
   }
 
   public static get retryCount(): number {
-    return this.isCI ? FrameworkConfig.retry.ci : FrameworkConfig.retry.local;
+    return this.retries;
   }
 }

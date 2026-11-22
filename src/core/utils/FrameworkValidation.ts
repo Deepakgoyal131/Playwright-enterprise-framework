@@ -1,6 +1,9 @@
 import type { FrameworkConfiguration } from "../../../configs/types/FrameworkConfig.types";
+import {
+  isProductionOptInValid,
+  resolveEnvironmentName,
+} from "./EnvironmentResolver";
 
-const supportedEnvironments = new Set(["dev", "qa", "uat", "prod"]);
 const requiredEnvironmentVariables = [
   "BASE_URL",
   "API_URL",
@@ -16,8 +19,49 @@ export function validateFrameworkInputs(
 ): string[] {
   const issues: string[] = [];
 
-  if (!supportedEnvironments.has(environmentName)) {
-    issues.push("FRAMEWORK_ENV must be one of: dev, qa, uat, prod.");
+  const resolvedName = resolveEnvironmentName(
+    environmentName,
+    config.environment.default,
+  );
+  if (!resolvedName) {
+    issues.push(
+      "FRAMEWORK_ENV must be local, dev, qa, uat, staging, or production (prod is a supported alias).",
+    );
+  }
+
+  if (
+    resolvedName &&
+    !isProductionOptInValid(resolvedName, environment, config)
+  ) {
+    issues.push(
+      `Production execution is blocked. Set ${config.environment.productionSafety.optInEnvironmentVariable}=true to continue.`,
+    );
+  }
+
+  for (const [name, value] of Object.entries(config.reporter)) {
+    if (typeof value !== "boolean") {
+      issues.push(`reporter.${name} must be a boolean.`);
+    }
+  }
+
+  if (!["off", "on", "only-on-failure"].includes(config.artifacts.screenshot)) {
+    issues.push("artifacts.screenshot has an unsupported value.");
+  }
+  if (!["off", "on", "retain-on-failure"].includes(config.artifacts.video)) {
+    issues.push("artifacts.video has an unsupported value.");
+  }
+  if (
+    !["off", "on", "retain-on-failure", "on-first-retry"].includes(
+      config.artifacts.trace,
+    )
+  ) {
+    issues.push("artifacts.trace has an unsupported value.");
+  }
+  if (
+    typeof config.execution.fullyParallel !== "boolean" ||
+    typeof config.execution.forbidOnlyInCI !== "boolean"
+  ) {
+    issues.push("execution flags must be booleans.");
   }
 
   const missingVariables = requiredEnvironmentVariables.filter(
@@ -92,6 +136,53 @@ export function validateFrameworkInputs(
     }
   }
 
+  if (
+    !resolveEnvironmentName(
+      config.environment.default,
+      config.environment.default,
+    )
+  ) {
+    issues.push(
+      "environment.default must be a supported framework environment.",
+    );
+  }
+
+  for (const [environmentName, profile] of Object.entries(
+    config.environment.profiles,
+  )) {
+    if (
+      !resolveEnvironmentName(environmentName, config.environment.default) ||
+      !profile
+    ) {
+      issues.push(`Environment profile '${environmentName}' is invalid.`);
+      continue;
+    }
+    validateExecutionOverrides(
+      `environment.profiles.${environmentName}`,
+      profile,
+      issues,
+    );
+    if (profile.ci) {
+      validateExecutionOverrides(
+        `environment.profiles.${environmentName}.ci`,
+        profile.ci,
+        issues,
+      );
+    }
+  }
+
+  const productionSafety = config.environment.productionSafety;
+  if (
+    !isEnvironmentVariableName(productionSafety.optInEnvironmentVariable) ||
+    !isEnvironmentVariableName(
+      productionSafety.destructiveOptInEnvironmentVariable,
+    )
+  ) {
+    issues.push(
+      "Production safety opt-in settings must use valid environment variable names.",
+    );
+  }
+
   for (const [name, value] of [
     ["retry.local", config.retry.local],
     ["retry.ci", config.retry.ci],
@@ -134,13 +225,163 @@ export function validateFrameworkInputs(
     issues.push("globalLifecycle.metadataPath must not be empty.");
   }
 
+  const auth = config.authentication;
+  if (auth.enabled) {
+    if (!["ui", "api", "custom"].includes(auth.strategy)) {
+      issues.push("authentication.strategy must be ui, api, or custom.");
+    }
+    if (!auth.sessionDirectory.trim()) {
+      issues.push(
+        "authentication.sessionDirectory must not be empty when authentication is enabled.",
+      );
+    }
+    if (
+      !Number.isFinite(auth.sessionLifetimeSeconds) ||
+      auth.sessionLifetimeSeconds <= 0
+    ) {
+      issues.push("authentication.sessionLifetimeSeconds must be positive.");
+    }
+    if (
+      !Number.isFinite(auth.expirationSkewSeconds) ||
+      auth.expirationSkewSeconds < 0
+    ) {
+      issues.push("authentication.expirationSkewSeconds must be non-negative.");
+    }
+    if (
+      !Object.values(auth.users).every(
+        (user) =>
+          isEnvironmentVariableName(user.usernameEnv) &&
+          isEnvironmentVariableName(user.passwordEnv) &&
+          (!user.userIdEnv || isEnvironmentVariableName(user.userIdEnv)),
+      )
+    ) {
+      issues.push(
+        "Authentication role mappings must reference valid environment variable names.",
+      );
+    }
+    if (auth.strategy === "ui") {
+      const requiredUiValues = [
+        auth.ui.loginPath,
+        auth.ui.usernameSelector,
+        auth.ui.passwordSelector,
+        auth.ui.submitSelector,
+        auth.ui.authenticatedSelector,
+      ];
+      if (requiredUiValues.some((value) => !value.trim())) {
+        issues.push(
+          "UI authentication requires a login path and configured login and authenticated-state selectors.",
+        );
+      }
+      if (
+        auth.ui.validationPath &&
+        (!auth.ui.validationPath.startsWith("/") ||
+          auth.ui.validationPath.startsWith("//") ||
+          auth.ui.validationPath.includes("?"))
+      ) {
+        issues.push(
+          "UI authentication validationPath must be a root-relative path without a query string.",
+        );
+      }
+    }
+    if (auth.strategy === "api") {
+      if (
+        !auth.api.loginEndpoint.startsWith("/") ||
+        auth.api.loginEndpoint.startsWith("//") ||
+        auth.api.loginEndpoint.includes("?")
+      ) {
+        issues.push(
+          "API authentication loginEndpoint must be a root-relative path without a query string.",
+        );
+      }
+      if (!auth.api.tokenJsonPath.trim() || !auth.api.tokenHeaderName.trim()) {
+        issues.push(
+          "API authentication requires tokenJsonPath and tokenHeaderName.",
+        );
+      }
+      if (
+        auth.api.sessionValidationEndpoint &&
+        (!auth.api.sessionValidationEndpoint.startsWith("/") ||
+          auth.api.sessionValidationEndpoint.startsWith("//") ||
+          auth.api.sessionValidationEndpoint.includes("?"))
+      ) {
+        issues.push(
+          "API authentication sessionValidationEndpoint must be a root-relative path without a query string.",
+        );
+      }
+      if (!/^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/.test(auth.api.tokenHeaderName)) {
+        issues.push(
+          "API authentication tokenHeaderName must be a valid HTTP header name.",
+        );
+      }
+      if (/[\r\n]/.test(auth.api.tokenHeaderName + auth.api.tokenPrefix)) {
+        issues.push(
+          "API authentication header configuration contains invalid line breaks.",
+        );
+      }
+      if (!containsCredentialTemplates(auth.api.requestPayload)) {
+        issues.push(
+          "API authentication requestPayload must include {{username}} and {{password}} placeholders.",
+        );
+      }
+    }
+  }
+
   return issues;
 }
 
 export function isSupportedFrameworkEnvironment(
   environmentName: string,
 ): boolean {
-  return supportedEnvironments.has(environmentName);
+  return resolveEnvironmentName(environmentName, "qa") !== undefined;
+}
+
+function isEnvironmentVariableName(value: string): boolean {
+  return /^[A-Za-z_][A-Za-z0-9_]*$/.test(value);
+}
+
+function containsCredentialTemplates(value: unknown): boolean {
+  const serialized = JSON.stringify(value) ?? "";
+  return (
+    serialized.includes("{{username}}") && serialized.includes("{{password}}")
+  );
+}
+
+function validateExecutionOverrides(
+  name: string,
+  profile: {
+    retries?: number;
+    workers?: number | string;
+    fullyParallel?: boolean;
+  },
+  issues: string[],
+): void {
+  if (
+    profile.retries !== undefined &&
+    (!Number.isInteger(profile.retries) || profile.retries < 0)
+  ) {
+    issues.push(`${name}.retries must be a non-negative integer.`);
+  }
+  if (profile.workers !== undefined) {
+    const validNumber =
+      typeof profile.workers === "number" &&
+      Number.isInteger(profile.workers) &&
+      profile.workers > 0;
+    const validPercentage =
+      typeof profile.workers === "string" &&
+      /^\d+%$/.test(profile.workers) &&
+      Number.parseInt(profile.workers, 10) > 0;
+    if (!validNumber && !validPercentage) {
+      issues.push(
+        `${name}.workers must be a positive integer or percentage string.`,
+      );
+    }
+  }
+  if (
+    profile.fullyParallel !== undefined &&
+    typeof profile.fullyParallel !== "boolean"
+  ) {
+    issues.push(`${name}.fullyParallel must be a boolean.`);
+  }
 }
 
 function isValidApplicationUrl(value: string): boolean {

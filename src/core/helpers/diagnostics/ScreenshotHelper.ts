@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { randomUUID } from "node:crypto";
 import path from "path";
 import fs from "fs";
 import { FrameworkConfig } from "configs/FrameworkConfig";
@@ -29,16 +30,17 @@ export class ScreenshotHelper {
 
     }
 
-    private static buildFileName(
-        name?: string
-    ): string {
+    private static buildFileName(name?: string): string {
+
+        const safeName = (name ?? "Screenshot")
+            .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_");
 
         const timestamp =
             FrameworkConfig.screenshot.timestamp
                 ? `_${this.getTimestamp()}`
                 : "";
 
-        return `${name ?? "Screenshot"}${timestamp}.png`;
+        return `${safeName}${timestamp}_${randomUUID()}.png`;
 
     }
 
@@ -70,8 +72,7 @@ export class ScreenshotHelper {
 
             path: filePath,
 
-            fullPage:
-                FrameworkConfig.screenshot.fullPage
+            fullPage: FrameworkConfig.screenshot.fullPage
 
         });
 
@@ -129,9 +130,7 @@ export class ScreenshotHelper {
 
     ): Promise<void> {
 
-        if (
-            !FrameworkConfig.screenshot.captureOnFailure
-        ) {
+        if (!FrameworkConfig.screenshot.captureOnFailure) {
 
             return;
 

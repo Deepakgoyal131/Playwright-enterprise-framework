@@ -148,6 +148,87 @@ export const FrameworkConfig: Readonly<FrameworkConfiguration> = {
     },
   },
 
+  authentication: {
+    enabled: false,
+    strategy: "custom",
+    sessionDirectory: "playwright/.auth",
+    reuseStorageState: true,
+    refreshExpiredSession: true,
+    sessionLifetimeSeconds: 3600,
+    expirationSkewSeconds: 60,
+    users: {},
+    ui: {
+      loginPath: "",
+      validationPath: "",
+      usernameSelector: "",
+      passwordSelector: "",
+      submitSelector: "",
+      authenticatedSelector: "",
+    },
+    api: {
+      loginEndpoint: "",
+      sessionValidationEndpoint: "",
+      requestPayload: {
+        username: "{{username}}",
+        password: "{{password}}",
+      },
+      tokenJsonPath: "",
+      tokenHeaderName: "Authorization",
+      tokenPrefix: "Bearer",
+      tokenExpiryJsonPath: "",
+    },
+  },
+
+  environment: {
+    default: "qa",
+    profiles: {
+      local: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 1, workers: "100%", fullyParallel: false },
+      },
+      dev: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      qa: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      uat: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      staging: {
+        retries: 0,
+        workers: "50%",
+        fullyParallel: false,
+        ci: { retries: 2, workers: "100%", fullyParallel: false },
+      },
+      production: {
+        retries: 0,
+        workers: 1,
+        fullyParallel: false,
+        ci: { retries: 0, workers: 1, fullyParallel: false },
+      },
+    },
+    productionSafety: {
+      enabled: true,
+      requireExplicitOptIn: true,
+      optInEnvironmentVariable: "ALLOW_PRODUCTION_TESTS",
+      excludeDestructiveTests: true,
+      allowDestructiveTests: false,
+      destructiveOptInEnvironmentVariable: "ALLOW_PRODUCTION_DESTRUCTIVE_TESTS",
+    },
+  },
+
   execution: {
     fullyParallel: false,
 

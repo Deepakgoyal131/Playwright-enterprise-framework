@@ -15,6 +15,7 @@ export class RequestHelper {
     method: APIHttpMethod,
     details: APIRequestDetails,
     sendRequest: () => Promise<APIResponse>,
+    captureAllureDetails = true,
   ): Promise<APIResponse> {
     Logger.debug(`Sending API ${method} request.`);
 
@@ -28,6 +29,7 @@ export class RequestHelper {
           );
           if (
             AllureHelper.isEnabled() &&
+            captureAllureDetails &&
             FrameworkConfig.allure.attachApiDetails
           ) {
             await AllureHelper.attachJson("API Request and Response", {
@@ -40,7 +42,11 @@ export class RequestHelper {
         },
       );
     } catch (error) {
-      if (AllureHelper.isEnabled() && FrameworkConfig.allure.attachApiDetails) {
+      if (
+        captureAllureDetails &&
+        AllureHelper.isEnabled() &&
+        FrameworkConfig.allure.attachApiDetails
+      ) {
         await AllureHelper.attachJson("API Request Failure", {
           schemaVersion: 1,
           request: this.sanitizeRequest(method, details),

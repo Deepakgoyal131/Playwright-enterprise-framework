@@ -4,10 +4,13 @@
   "description": "Most advance automation framework which is easy to use, scalable, maintainable, and feet for all type of web application like Role based applications, Simple application, Flow dependent applications",
   "main": "index.js",
   "scripts": {
+    "test:local": "cross-env FRAMEWORK_ENV=local playwright test",
     "test:qa": "cross-env FRAMEWORK_ENV=qa playwright test",
     "test:dev": "cross-env FRAMEWORK_ENV=dev playwright test",
     "test:uat": "cross-env FRAMEWORK_ENV=uat playwright test",
     "test:prod": "cross-env FRAMEWORK_ENV=prod playwright test",
+    "test:staging": "cross-env FRAMEWORK_ENV=staging playwright test",
+    "test:production": "cross-env FRAMEWORK_ENV=production playwright test",
     "allure:generate": "allure generate ./allure-results --clean -o ./allure-report && node -e \"require('fs').writeFileSync('./allure-report/.gitkeep', '')\"",
     "allure:open": "allure open ./allure-report",
     "allure:serve": "allure serve ./allure-results"

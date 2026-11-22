@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import * as XLSX from "xlsx";
 import { IKeyedDataReader } from "./IKeyedDataReader";
+import { cloneTestData } from "../helpers/cloneTestData";
 
 export class ExcelReader<T extends object>
     implements IKeyedDataReader<T> {
@@ -25,7 +26,6 @@ export class ExcelReader<T extends object>
     }
 
     private load(sheetName?: string): T[] {
-
         if (!fs.existsSync(this.filePath)) {
             throw new Error(
                 `Excel file not found: ${this.filePath}`
@@ -33,9 +33,7 @@ export class ExcelReader<T extends object>
         }
 
         try {
-
-            const workbook =
-                XLSX.readFile(this.filePath);
+            const workbook = XLSX.readFile(this.filePath);
 
             const selectedSheet =
                 sheetName ??
@@ -47,8 +45,7 @@ export class ExcelReader<T extends object>
                 );
             }
 
-            const worksheet =
-                workbook.Sheets[selectedSheet];
+            const worksheet = workbook.Sheets[selectedSheet];
 
             if (!worksheet) {
                 throw new Error(
@@ -63,9 +60,7 @@ export class ExcelReader<T extends object>
                     defval: ""
                 }
             );
-
         } catch (error) {
-
             if (error instanceof Error) {
                 throw new Error(
                     `Unable to read Excel file ` +
@@ -78,22 +73,18 @@ export class ExcelReader<T extends object>
     }
 
     public read(): T[] {
-        return this.data;
+        return cloneTestData(this.data);
     }
 
     public get(key: string): T {
+        const record = this.data.find(item => {
+            const value = item as Record<string, unknown>;
 
-        const record =
-            this.data.find(item => {
-
-                const value =
-                    item as Record<string, unknown>;
-
-                return (
-                    String(value["key"]) === key ||
-                    String(value["id"]) === key
-                );
-            });
+            return (
+                String(value["key"]) === key ||
+                String(value["id"]) === key
+            );
+        });
 
         if (!record) {
             throw new Error(
@@ -102,15 +93,12 @@ export class ExcelReader<T extends object>
             );
         }
 
-        return record;
+        return cloneTestData(record);
     }
 
     public exists(key: string): boolean {
-
         return this.data.some(item => {
-
-            const value =
-                item as Record<string, unknown>;
+            const value = item as Record<string, unknown>;
 
             return (
                 String(value["key"]) === key ||
